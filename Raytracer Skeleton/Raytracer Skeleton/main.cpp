@@ -1,7 +1,6 @@
 
 //Note: Must link with windowscodecs.lib (Windows) or libturbojpeg, libpng, and libz (Linux)
 
-
 #include <iostream>
 #include <fstream>
 #include <vector>

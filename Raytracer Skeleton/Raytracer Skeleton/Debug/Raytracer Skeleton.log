@@ -23,10 +23,10 @@ D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Ske
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\Image.h(42,29): warning C4244:  'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\traceRay.h(102,21): warning C4018:  '<': signed/unsigned mismatch
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\traceRay.h(120,26): warning C4056:  overflow in floating-point constant arithmetic
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(37,17): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(45,13): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(36,17): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(44,13): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(45,14): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(46,14): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\main.cpp(47,14): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\math3d.h(800,1): error C2228:  left of '.len' must have class/struct/union
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\math3d.h(800,1): message :  type is 'const T'
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Raytracer Skeleton\Raytracer Skeleton\math3d.h(800,1): message :         with
