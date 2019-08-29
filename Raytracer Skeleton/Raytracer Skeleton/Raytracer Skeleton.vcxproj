@@ -138,13 +138,6 @@
     <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="cube.obj" />
-    <Object Include="torus.obj" />
-    <Object Include="torusknot.obj" />
-    <Object Include="triangle.obj" />
-    <Object Include="twistedtoroid.obj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>

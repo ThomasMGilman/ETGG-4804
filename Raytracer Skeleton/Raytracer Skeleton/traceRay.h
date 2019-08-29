@@ -7,7 +7,7 @@
 //ip : intersection point
 void traceSpheres(Scene& scene, vec3& s, vec3& v, vec3& ip, vec3& N, vec3& color, float& closestT, bool& inter)
 {
-	std::cout << "sphere" << std::endl;
+	//std::cout << "sphere" << std::endl;
     unsigned ci=(unsigned)-1;
 
 	//go through the list of spheres in the scene 
@@ -65,54 +65,60 @@ void traceSpheres(Scene& scene, vec3& s, vec3& v, vec3& ip, vec3& N, vec3& color
 void traceTriangles(Scene& scene, vec3& s, vec3& v, vec3& ip, vec3& N, 
             vec3& color, float& closestT, bool& inter)
 {
-	std::cout << "triangle" << std::endl;
+	//std::cout << "triangle" << std::endl;
 	unsigned ti = (unsigned)-1; //triangle intersection
-	Mesh* cm;					//closest mesh to draw
+	Mesh *cm = nullptr;			//closest mesh to draw pointer
 
+	//check meshes for closest triangle
     for(auto& M : scene.meshes ){
 		
         for(unsigned i=0;i<M.triangles.size();++i){
             Triangle& T = M.triangles[i];
-			float denom = dot(T.N, v);
+			float denominator = dot(T.N, v);
 			
 			//does the ray intersect the triangle
-			if (denom != 0)				
+			if (denominator != 0)				
 			{
-				float t = (-(T.D + (dot(T.N, s)))) / denom;
+				float t = (-(T.D + (dot(T.N, s)))) / denominator;
 				if (t >= 0)
 				{
+					//std::cout << "got intersection: " << t << std::endl;
 					if (closestT > t)
 					{
-						closestT = t;
-						ti = i;
-						*cm = M;
+						//std::cout << "got closer intersection: " << t <<std::endl;
+						float sumQi = 0;
+						for (int i = 0; i < T.e->len(); i++)	//make sure ip is intersecting the triangle
+						{
+							vec3 qi = cross(T.e[i], (ip - T.p[i]));
+							sumQi += qi.magnitude();
+						}
+
+						float A = sumQi * T.oneOverTwiceArea;
+						if (A <= 1.001)
+						{
+							closestT = t;
+							ti = i;
+							cm = &M;
+						}
 					}
 				}
 			}
         }
-		
-		if (ti == (unsigned)-1) {				//no intersection
-			inter = false;
-			return;
-		}
+    }
 
-		Triangle& T = cm->triangles[ti];		//get triangle to draw
-		ip = s + (closestT * v);
+	if ( cm == nullptr || ti == (unsigned)-1) {	//no intersection
 
-		for (int i = 0; i < T.e->len(); i++)	//make sure ip is intersecting the triangle
-		{
-			vec3 qi = cross(T.e[i], (ip - T.p[i]));
-			if( dot(qi.magnitude(), T.oneOverTwiceArea) > 1.001 )
-			{
-				inter = false;
-				return;
-			}
-		}
-
+		//std::cout << "no intersection, or mesh is null Mesh: " << std::endl;
+		inter = false;
+		return;
+	}
+	else
+	{
+		Triangle& T = cm->triangles[ti];		//get triangle to draw from closest mesh
 		N = T.N;
 		color = cm->color;
 		inter = true;
-    }
+	}
 }
 
 bool traceRay(Scene& scene, vec3& s, vec3& v, vec3& ip, vec3& N, vec3& color)

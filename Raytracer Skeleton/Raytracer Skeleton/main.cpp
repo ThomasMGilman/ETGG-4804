@@ -1,5 +1,8 @@
 
+
+
 //Note: Must link with windowscodecs.lib (Windows) or libturbojpeg, libpng, and libz (Linux)
+
 
 #include <iostream>
 #include <fstream>
@@ -80,7 +83,6 @@ int main(int argc, char* argv[])
     int width=512;
     int height=width;
 
-	std::cout << "start" << endl;
     if( argc == 1 ){
         std::cout << "Need command line argument: Scene file\n";
         return 1;

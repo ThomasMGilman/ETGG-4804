@@ -6,6 +6,8 @@
 
 //Note: Must link with windowscodecs.lib
 
+
+
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
