@@ -1,6 +1,10 @@
+//Thomas Gilman
+//Jim Hudson
+//ETGG 4804_1
+//Optomization Techniques
+//3rd September, 2019
 #pragma once
 
-//work on this
 //s : ray start
 //v : ray direction
 //N : normal
