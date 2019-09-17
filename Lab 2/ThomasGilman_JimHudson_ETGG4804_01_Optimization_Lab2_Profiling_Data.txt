@@ -1,0 +1,44 @@
+Optimization Lab2 Diagnostics:
+	b.jpg:
+	Image.h:
+		countColors:
+			line 148: if(find(M.begin(), M.end(), v) == M.end())
+				10109 (73.34%) //Runs through the vector of colors every time to check if color is already in the vector
+								//Try hashing instead; a hashmap or some other form of dictionary.
+								
+		encodePng:
+			line 444: hr = frame->WriteSource(bmp, nullptr)
+				501 (3.63%)
+		
+		decodeAny:
+			line 612: hr = conv -> CopyPixels(nullptr, w*Bpp, w*h*Bpp, returnedImage.data());
+				612 (4.44%)
+			
+		initialize:
+			line 308: pixbuff.resize(tmp.size()/32+1)
+				733 (5.32%)
+		
+		Image:
+			line 49: initialize(D.data(), (unsigned)D.size());
+				756 (5.48%)
+	
+	pp.jpg:
+		countColors:
+			line 148: if(find(M.begin(), M.end(), v) == M.end())
+				21522 (78.6%)
+								
+		encodePng:
+			line 444: hr = frame->WriteSource(bmp, nullptr)
+				985 (3.6%)
+		
+		decodeAny:
+			line 612: hr = conv -> CopyPixels(nullptr, w*Bpp, w*h*Bpp, returnedImage.data());
+				1009 (3.69%)
+			
+		initialize:
+			line 308: pixbuff.resize(tmp.size()/32+1)
+				1185 (4.33%)
+		
+		Image:
+			line 49: initialize(D.data(), (unsigned)D.size());
+				1233 (4.5%)
