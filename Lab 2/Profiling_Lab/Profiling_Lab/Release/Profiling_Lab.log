@@ -1,69 +1,60 @@
 ﻿  floydsteinberg.cpp
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1180,26): warning C4018:  '<': signed/unsigned mismatch
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193,50): warning C4305:  'argument': truncation from 'double' to 'T'
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193,50): warning C4305:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193,50): warning C4305:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193,50): warning C4305:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193,50): warning C4305:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1257,22): warning C4018:  '<': signed/unsigned mismatch
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267,50): warning C4305:  'argument': truncation from 'double' to 'T'
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267,50): warning C4305:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267,50): warning C4305:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267,50): warning C4305:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267,50): warning C4305:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1322,22): warning C4018:  '<': signed/unsigned mismatch
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329,40): warning C4305:  'argument': truncation from 'double' to 'T'
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329,40): warning C4305:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329,40): warning C4305:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329,40): warning C4305:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329,40): warning C4305:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\Image.h(44,29): warning C4244:  'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:  '+=': conversion from 'T' to 'T', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         and
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:             T=int32_t
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(32,40): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(38,48): warning C4244:  '=': conversion from 'int' to 'T', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(38,48): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(38,48): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(38,48): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(38,48): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39,48): warning C4244:  '=': conversion from 'int' to 'T', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39,48): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39,48): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39,48): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39,48): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(42,48): warning C4244:  '=': conversion from 'int' to 'T', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(42,48): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(42,48): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(42,48): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(42,48): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43,42): warning C4244:  '=': conversion from 'int' to 'T', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43,42): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43,42): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43,42): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43,42): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,49): warning C4244:  'argument': conversion from 'T' to 'uint8_t', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,49): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,49): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,49): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,49): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,42): warning C4244:  'argument': conversion from 'T' to 'uint8_t', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,42): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,42): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,42): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,42): warning C4244:         ]
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,35): warning C4244:  'argument': conversion from 'T' to 'uint8_t', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,35): warning C4244:         with
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,35): warning C4244:         [
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,35): warning C4244:             T=float
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(81,35): warning C4244:         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1180): warning C4018: '<': signed/unsigned mismatch
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1193): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1257): warning C4018: '<': signed/unsigned mismatch
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1267): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1322): warning C4018: '<': signed/unsigned mismatch
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\math3d.h(1329): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\Image.h(44): warning C4244: 'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(33): warning C4244: '+=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int32_t
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(39): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(40): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(43): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(44): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profiling_Lab\floydsteinberg.cpp(82): warning C4244: 'argument': conversion from 'T' to 'uint8_t', possible loss of data
+          with
+          [
+              T=float
+          ]
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 631 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  0 of 740 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Profiling_Lab.vcxproj -> D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\Lab 2\Profiling_Lab\Release\Profiling_Lab.exe
+  Profiling_Lab.vcxproj -> D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Release\Profiling_Lab.exe

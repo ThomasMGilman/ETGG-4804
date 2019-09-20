@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <unordered_set>
 #include "math3d.h"
 #include "Image.h"
 
@@ -136,7 +137,16 @@ Image computeDitheredBilevel(Image img){
     return img;
 }    
 
+std::hash<std::string> hs;
+struct Hash {
+	std::size_t operator()(ivec3 const& iv3) const
+	{
+		return hs(std::to_string(iv3[0]) + std::to_string(iv3[1]) + std::to_string(iv3[2]));
+	}
+};
+
 int countColors(std::string filename){
+	//std::unordered_set<ivec3, Hash> M;
     std::vector<ivec3> M;
     int unique=0;
     Image img(filename);
@@ -146,12 +156,16 @@ int countColors(std::string filename){
             img.getPixel(x,y,r,g,b,a);
             ivec3 v(r,g,b);
             if( find(M.begin(),M.end(),v) == M.end() ){
-                M.push_back(v);
-                unique++;
+			//M.emplace(v);
+			//if(M.find(v) == M.end()){
+				//M.emplace(v);
+				M.push_back(v);
+				unique++;
             }
         }
     }
-    return unique;
+	//return M.size();
+	return unique;
 }
 
 int main(int argc, char* argv[])
