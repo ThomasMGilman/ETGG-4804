@@ -146,26 +146,18 @@ struct Hash {
 };
 
 int countColors(std::string filename){
-	//std::unordered_set<ivec3, Hash> M;
-    std::vector<ivec3> M;
-    int unique=0;
+	std::unordered_set<ivec3, Hash> M;
     Image img(filename);
+	uint8_t r, g, b, a;
     for(unsigned y=0;y<img.height();++y){
         for(unsigned x=0;x<img.width();++x){
-            uint8_t r,g,b,a;
             img.getPixel(x,y,r,g,b,a);
             ivec3 v(r,g,b);
-            if( find(M.begin(),M.end(),v) == M.end() ){
-			//M.emplace(v);
-			//if(M.find(v) == M.end()){
-				//M.emplace(v);
-				M.push_back(v);
-				unique++;
-            }
+			if(M.find(v) == M.end())
+				M.emplace(v);
         }
     }
-	//return M.size();
-	return unique;
+	return M.size();
 }
 
 int main(int argc, char* argv[])

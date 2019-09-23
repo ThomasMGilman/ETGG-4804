@@ -1,0 +1,25 @@
+Unedited Performance Time: ~23.646 seconds
+	Primary cause: floydsteinberg.cpp
+		countColors:
+			find(M.begin(),M.end(),v) == M.end() 10109 (73.34%)
+				
+				M is a vector in this case, meaning that it has to check through the vector every time
+				to find if v is in it from front to back. The vector increases in length when it doesnt find v increasing the time to parse through M.
+				
+Swap Vector M with unordered_set<ivec3> Performance Time: ~8.81299 seconds
+	Speedup: 23.646 / 8.81299 = ~2.6831 Times faster
+		Primary cause: floydsteinberg.cpp
+			countColors:
+				if(M.find(v) == M.end()) 3613 (40.84%)
+					M.emplace(v);
+					
+				Replaced Vector with a unordered_set, and created a hash function. 
+				The hash function turns the integers into strings and appends them together and returns the hash value as the key.
+				Uses emplace to do in place insertion of vec3 instead of copying.
+				return M.size instead of creating variable and incrimenting every add.
+				Moved decleration of uint8_t r,g,b,a outside of for loops.
+					
+		Secondary cause: floydsteinberg.cpp
+			struct Hash{ std::size_t operator()(ivec3 const& iv3) conts{
+				return hs(std::to_string(iv3[0]) + std::to_string(iv3[1]) + std::to_string(iv3[2]));}};
+					2855(32.27%)

@@ -53,8 +53,8 @@ D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Profili
               T=float
           ]
   Generating code
-  0 of 740 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  7 of 890 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    27 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Profiling_Lab.vcxproj -> D:\School\Programs\ETGG 4804 Optimization Techniques\Lab 2\Profiling_Lab\Release\Profiling_Lab.exe
