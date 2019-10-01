@@ -82,7 +82,6 @@ void traceTriangles(Scene& scene, vec3& s, vec3& v, vec3& ip, vec3& N,
 {
 	unsigned ti = (unsigned)-1; //triangle intersection
 	Mesh *cm = nullptr;			//closest mesh to draw pointer
-
 	//check meshes for closest triangle
     for(auto& M : scene.meshes ){
 		

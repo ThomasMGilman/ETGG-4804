@@ -14,6 +14,7 @@
 #include "Image.h"
 #include "Scene.h"
 #include "traceRay.h"
+//#include "Octree.h"
 
 bool traceRay(Scene& scene, vec3& rayStart, vec3& rayDir, vec3& ip, vec3& N, vec3& color);
 
@@ -47,7 +48,13 @@ void raytrace(Scene& scene, std::vector<std::vector<vec3>>& pic){
     float d = 1.0 / tan(scene.camera.fov_radians);
     float dy = 2.0/(h-1);
     float dx = 2.0/(w-1);
-    float y=1.0;
+    float y = 1.0;
+	
+	//Calculate maxZ then setOctree here
+	//OctreeNode* oct = new OctreeNode(scene, 0);
+	std::cout << "maxPoint: " << scene.maxPoint << " minPoint: " << scene.minPoint;
+
+
     for(unsigned yi=0;yi<h;++yi,y-=dy){
     	std::cout << yi << " ";
     	if( ( (yi+1) % 20) == 0 )
@@ -97,7 +104,7 @@ int main(int argc, char* argv[])
     }
     
     auto start = std::chrono::high_resolution_clock::now();
-    raytrace(scene,picdata);
+    raytrace(scene, picdata);
     auto end = std::chrono::high_resolution_clock::now();
     auto delta = std::chrono::duration<double>(end-start).count();
     std::cout << delta << " seconds\n";

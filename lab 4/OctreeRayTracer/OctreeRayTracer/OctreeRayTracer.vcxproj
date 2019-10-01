@@ -136,6 +136,7 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="traceRay.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="usefullFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

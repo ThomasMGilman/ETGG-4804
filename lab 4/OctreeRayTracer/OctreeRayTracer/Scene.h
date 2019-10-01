@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "usefullFunctions.h"
 
 class Scene {
     public:
@@ -13,6 +14,8 @@ class Scene {
     std::vector<Mesh> meshes;
     Camera camera;
     vec3 lightPosition = vec3(0,10,0);
+	vec3 minPoint = vec3(1e99, 1e99, 1e99);
+	vec3 maxPoint = vec3(-1e99, -1e99, -1e99);
     
     Scene(std::string filename){
         int numtris=0;
@@ -67,6 +70,12 @@ class Scene {
         }
         std::cout << spheres.size() << " spheres\n";
         std::cout << numtris << " triangles\n";
+
+		//set min and max points of scene
+		for (int i = 0; i < spheres.size(); i++)
+			setMinMax<Sphere>(minPoint, maxPoint, spheres[i]);
+		for (int i = 0; i < meshes.size(); i++)
+			setMinMax<Mesh>(minPoint, maxPoint, meshes[i]);
     }
 };
 

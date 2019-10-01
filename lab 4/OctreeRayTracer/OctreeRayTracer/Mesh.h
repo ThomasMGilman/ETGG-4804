@@ -14,6 +14,8 @@
 class Mesh{
   public:    
     std::vector<Triangle> triangles;
+	vec3 minPoint = vec3(1e99, 1e99, 1e99);
+	vec3 maxPoint = vec3(-1e99, -1e99, -1e99);
     vec3 color;
     float alpha;
     float refl;
@@ -58,11 +60,20 @@ class Mesh{
                     //doesn't support negative indices...
                     I.push_back(vi-1);
                 }
-                for(unsigned i=2;i<I.size();++i){
+                for(unsigned i=2; i<I.size();++i){
                     vec3 p0 = P[I[0]];
                     vec3 p1 = P[I[i-1]];
                     vec3 p2 = P[I[i]];
                     Triangle tr(p0,p1,p2);
+					for (unsigned pi = 0; pi < tr.p->len(); pi++)
+					{
+						const vec3& point = tr.p[pi];
+						for (unsigned n = 0; n < point.len(); n++)
+						{
+							if (point[n] > maxPoint[n]) maxPoint[n] = point[n];			//Set the maxpoint[n] to point[n] if point[n] is greater
+							else if (point[n] < minPoint[n]) minPoint[n] = point[n];	//Do the same for the min
+						}
+					}
                     this->triangles.push_back(tr);
                 }
             }

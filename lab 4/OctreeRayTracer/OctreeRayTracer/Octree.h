@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 float rayPlaneIntersection(const vec3& N, float D, vec3& s, vec3& v)
 {
 	float denom = dot(N, v);
@@ -29,7 +30,8 @@ void planePairIntersection(const vec4& p1, const vec4& p2, vec3&
 }
 
 /*BoxTest*/
-//planes 0,1 = x min/max planes 2,3 = y min/max
+//planes 0,1 = x min/max planes 
+//planes 2,3 = y min/max
 //planes 4,5 = z min/max
 bool rayBoxIntersection(array<vec4, 6> & planes, vec3& s, vec3& v) {
 	using namespace std;
@@ -52,10 +54,16 @@ public:
 	std::array<vec4, 6> planes;			//six planes of this node
 	static vector<OctreeNode> nodes;	//all nodes
 
+	OctreeNode(Scene& scene, int depth)
+	{
+
+	}
+
 	void initialize(int depth, vector<Triangle>& tris) {
 		if (depth >= MAXDEPTH || tris.size() <= MAXTRIS) {
 			this->triangles = tris;
 			this->children = { 0 };		//set all children to 0
+			
 		}
 		else {
 			int idx = nodes.size();
@@ -82,6 +90,9 @@ public:
 			if (segmentBoxIntersection(T.p[i], T.p[(i + 1) % 3], this))
 				return true;
 		}
+		for (int p = 0; p < this->planes.size(); p++)
+		{
+		}
 		for (all twelve edges e of this) {
 			if (segmentTriangleIntersection(e, T))
 				return true;
@@ -100,6 +111,8 @@ public:
 	}
 
 	bool segmentTriangleIntersection(edge ,Triangle& T)
-	{}
+	{
+
+	}
 };
 
