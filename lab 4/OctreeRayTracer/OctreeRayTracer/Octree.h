@@ -54,7 +54,7 @@ public:
 	std::array<vec4, 6> planes;			//six planes of this node
 	static vector<OctreeNode> nodes;	//all nodes
 
-	OctreeNode(Scene& scene, int depth)
+	OctreeNode(Mesh& sceneMesh, int depth)
 	{
 
 	}

@@ -1,0 +1,30 @@
+
+struct Sphere
+{
+	vec4 centerAndRadius, color;
+};
+
+layout(local_size_x=64,local_size_y=1,local_size_z=1) in;
+layout(binding=0,rgba8) uniform image2DArray img;
+layout(std430, binding = 0) buffer S 
+{
+	Sphere spheres[];
+};
+
+void main(){
+	ivec2 pixelCoord = ivec2(gl_GlobalInvocationID.xy);
+	ivec2 picSize = imageSize(img).xy;
+	float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
+	dy = 2.0/(picSize.y-1);
+	float dx = 2.0/(picSize.x-1);
+	float y = -1.0 + pixelCoord.y * dy;
+	float x = -1.0 + pixelCoord.x * dx;
+	vec3 rayDir = x*cameraRight + y*cameraUp + d*cameraLook;
+	vec3 ip, N, color;
+
+	if( !traceSpheres(eyePos, rayDir, ip, N, color ) ) 
+		color = vec3(0,0,0);
+	else
+		color = shadePixel( ip, N, color );
+	imageStore(img, ivec3(pixelCoord,0), vec4(color,1.0) );
+}

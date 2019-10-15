@@ -1,0 +1,21 @@
+layout(local_size_x=32,local_size_y=1,local_size_z=1) in;
+layout(binding=0,rgba8) uniform image2DArray img2;
+
+void main(){
+	ivec3 mynum = ivec3(gl_GlobalInvocationID); //
+
+	ivec3 imageSize = imageSize(img2);
+	vec4 c = imageLoad( img2, mynum);
+	if(mynum[0] < imageSize[0]/2 && mynum[1] < imageSize[1]/2)
+	{
+		if( length(c.rgb) < 0.1 ){
+			c.rgb = vec3(0,0,0);
+			imageStore(img2, mynum, c );
+		}
+	}
+	else
+	{
+		c.rgb = vec3(0,0,0);
+		imageStore(img2, mynum, c);
+	}
+}

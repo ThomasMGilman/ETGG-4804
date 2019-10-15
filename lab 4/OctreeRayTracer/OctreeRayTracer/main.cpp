@@ -52,7 +52,7 @@ void raytrace(Scene& scene, std::vector<std::vector<vec3>>& pic){
 	
 	//Calculate maxZ then setOctree here
 	//OctreeNode* oct = new OctreeNode(scene, 0);
-	std::cout << "maxPoint: " << scene.maxPoint << " minPoint: " << scene.minPoint;
+	std::cout << "maxPoint: " << scene.maxPoint << " minPoint: " << scene.minPoint << std::endl;
 
 
     for(unsigned yi=0;yi<h;++yi,y-=dy){
