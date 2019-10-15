@@ -160,6 +160,7 @@
     <ClInclude Include="framework\Texture.h" />
     <ClInclude Include="framework\Texture2DArray.h" />
     <ClInclude Include="framework\TextureCube.h" />
+    <ClInclude Include="framework\traceRay.h" />
     <ClInclude Include="framework\Triangle.h" />
     <ClInclude Include="framework\UnitSquare.h" />
     <ClInclude Include="framework\update.h" />

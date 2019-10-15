@@ -4,6 +4,11 @@ struct GPUSphere
 	alignas(16) vec4 centerAndRadius, color;
 };
 
+struct GPUTriangle
+{
+
+};
+
 void setup(int winwidth, int winheight){
     
     globs = std::make_unique<Globals>();
@@ -18,16 +23,16 @@ void setup(int winwidth, int winheight){
     
     globs->mipsampler.bind(0);
     globs->linearsampler.bind(1);
-
 	std::vector<GPUSphere> sphereData(globs->scene.spheres.size());
+	//std::vector<>
 	for (unsigned i = 0; i < globs->scene.spheres.size(); i++)
 	{
 		Sphere* s = &globs->scene.spheres[i];
 		sphereData[i].centerAndRadius = vec4(s->c, s->r);
 		sphereData[i].color = vec4(s->color, 1.0);
 	}
-	auto b = Buffer::create(sphereData);
-	b->bindBase(GL_SHADER_STORAGE_BUFFER, 0);
+	globs->sphereBuffer = Buffer::create(sphereData);
+	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);
 
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));
