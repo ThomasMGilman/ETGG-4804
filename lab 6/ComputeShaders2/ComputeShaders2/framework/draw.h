@@ -11,7 +11,8 @@ void draw2()
 		M.draw();
 	}
 
-	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);
+	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);		//Bind SphereBuffer
+	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);	//Bind TriangleBuffer
 }
 
 

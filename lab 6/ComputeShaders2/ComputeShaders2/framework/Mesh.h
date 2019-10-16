@@ -17,6 +17,7 @@ public:
     GLuint vao;
 
     unsigned numverts;
+	unsigned numTriangles = 0;
     vec3 color;
     float alpha;
     float refl;
@@ -104,7 +105,7 @@ public:
                     
                     Triangle tr(p[0],p[1],p[2]);
                     this->triangles.push_back(tr);
-                    
+					numTriangles++;
                 }
             }
         }

@@ -6,11 +6,11 @@ struct Sphere
 
 struct Triangle
 {
-	vec3 p[3];
-	vec3 e[3];
+	vec4 p[3];
+	vec4 e[3];
 	vec4 color;
 	vec4 N;								//Normal is vec3
-	vec4 D_oneOverTwiceArea;			//D is float, oneOverTwiceArea is float
+	vec4 D_oneOverTwiceArea;			//D is float, oneOverTwiceArea is float, 0, 0
 };
 
 layout(local_size_x=32,local_size_y=1,local_size_z=1) in;
@@ -25,7 +25,8 @@ layout(std430, binding = 1) buffer T
 	Triangle triangles[];
 };
 
-void traceSpheres(in vec3 s, in vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color, inout float closestT, inout bool inter)
+void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
+	inout vec3 color, inout float closestT, inout bool inter)
 {
     int ci=-1;
 
@@ -34,11 +35,11 @@ void traceSpheres(in vec3 s, in vec3 v, inout vec3 ip, inout vec3 N, inout vec3 
     for(int i=0;i<spheres.length();++i){
 
 		//q = rayStart - sphereCenter
-		//q * q - r^2 + 2(q * v)t + t^2(v * v) = 0
-		vec3 q = s - spheres[i].centerAndRadius.xyz;
+		//q * q - r^2 + 2(q * rayDir)t + t^2(rayDir * rayDir) = 0
+		vec3 q = eyePos - spheres[i].centerAndRadius.xyz;
 		float radius = spheres[i].centerAndRadius.w;
-		float A = dot(v, v);
-		float B = 2 * dot(q, v);
+		float A = dot(rayDir, rayDir);
+		float B = 2 * dot(q, rayDir);
 		float C = dot(q, q) - (radius * radius);
 		float discriminant = (B * B) - (4 * A * C);
 
@@ -86,51 +87,48 @@ void traceSpheres(in vec3 s, in vec3 v, inout vec3 ip, inout vec3 N, inout vec3 
     }
 	else
 	{
-		ip = s + closestT * v;									//intersection point
+		ip = eyePos + closestT * rayDir;						//intersection point
 		N = normalize(ip - spheres[ci].centerAndRadius.xyz);	//Normal at intersection point
 		color = spheres[ci].color.xyz;
 		inter = true;
 	}
-}
+};
 
-void traceTriangles(vec3 s, vec3 v, vec3 ip, vec3 N, 
-            vec3 color, float closestT, inout bool inter)
+void traceTriangles(vec3 eyePos, vec3 rayDir, vec3 ip, vec3 N, 
+            vec3 color, inout float closestT, inout bool inter)
 {
 	int ti = -1;		//triangle intersection
 
 	for(int i = 0; i < triangles.length(); ++i){
-		vec3 p = triangles[i].p[0];
-		vec3 q = triangles[i].p[1];
-		vec3 r = triangles[i].p[2];
+		vec3 p = triangles[i].p[0].xyz;
+		vec3 q = triangles[i].p[1].xyz;
+		vec3 r = triangles[i].p[2].xyz;
 
 		vec3 N = cross((q-r), (r-p));	//Triangles Normal
-		float D = -dot(N, p);			//Distance of plane from origin
-		float denominator = dot(N, v);
+		float denominator = dot(N, rayDir);
 			
-		//does the ray intersect the triangle
+		//check for ray intersection with triangle
 		//No intersection if denominator is zero
 		if (denominator != 0)				
 		{
-			float t = -(D + dot(N, s)) / denominator;
-			if (t >= 0)
+			float D = -dot(N, p);			//Distance of plane from origin
+			float t = -(D + dot(N, eyePos)) / denominator;
+			if (t >= 0 && closestT > t)
 			{
-				if (closestT > t)
+				vec3 currentIP = eyePos + (t * rayDir); //intersection point
+				float sumQi = 0;
+				for (int j = 0; j < triangles[i].e.length(); j++)	//make sure ip is intersecting the triangle
 				{
-					vec3 currentIP = s + (t*v); //intersection point
-					float sumQi = 0;
-					for (int j = 0; j < triangles[i].e.length(); j++)	//make sure ip is intersecting the triangle
-					{
-						vec3 qi = cross(triangles[i].e[j], (currentIP - triangles[i].p[j]));
-						sumQi += qi[0]+qi[1]+qi[2];
-					}
+					vec3 qi = cross(triangles[i].e[j].xyz, (currentIP - triangles[i].p[j].xyz));
+					sumQi += qi[0]+qi[1]+qi[2];
+				}
 
-					float A = sumQi * triangles[i].D_oneOverTwiceArea.y;
-					if (A <= 1.001)
-					{
-						ip = currentIP;
-						closestT = t;
-						ti = i;
-					}
+				float A = sumQi * triangles[i].D_oneOverTwiceArea.y;
+				if (A <= 1.001)
+				{
+					ip = currentIP;
+					closestT = t;
+					ti = i;
 				}
 			}
 		}
@@ -147,17 +145,17 @@ void traceTriangles(vec3 s, vec3 v, vec3 ip, vec3 N,
 		color = triangles[ti].color.xyz;
 		inter = true;
 	}
-}
+};
 
 bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color)
 {
     float closestT = 6.55e4;
-    bool inter;
+    bool inter = false;
 	traceSpheres(s, v, ip, N, color, closestT, inter);
 	traceTriangles(s, v, ip, N, color, closestT, inter);
 
     return inter;
-}
+};
 
 void main(){
 	ivec2 pixelCoord = ivec2(gl_GlobalInvocationID.xy);

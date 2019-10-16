@@ -16,7 +16,7 @@ class Globals {
     Sampler linearsampler{false};
     Text text1{ vec2(10,35), ""};
     Text text2{ vec2(10,10), ""};
-    Scene scene{"scene3.txt"};
+    Scene scene{"scene2.txt"};
     std::set<int> keyset;
     bool paused=false;
 

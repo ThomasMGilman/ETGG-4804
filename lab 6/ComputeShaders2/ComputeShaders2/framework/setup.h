@@ -6,7 +6,8 @@ struct GPUSphere
 
 struct GPUTriangle
 {
-
+	alignas(16) vec4 point[3], edge[3];
+	alignas(16) vec4 color, Normal, D_oneOverTwiceArea;
 };
 
 void setup(int winwidth, int winheight){
@@ -24,7 +25,7 @@ void setup(int winwidth, int winheight){
     globs->mipsampler.bind(0);
     globs->linearsampler.bind(1);
 	std::vector<GPUSphere> sphereData(globs->scene.spheres.size());
-	//std::vector<>
+
 	for (unsigned i = 0; i < globs->scene.spheres.size(); i++)
 	{
 		Sphere* s = &globs->scene.spheres[i];
@@ -33,6 +34,31 @@ void setup(int winwidth, int winheight){
 	}
 	globs->sphereBuffer = Buffer::create(sphereData);
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);
+
+	int numTriangles = 0;
+	for (Mesh& m : globs->scene.meshes)
+		numTriangles += m.numTriangles;
+
+	std::vector<GPUTriangle> triangleData(numTriangles);
+	unsigned triangleOffset = 0;
+	for (Mesh& m : globs->scene.meshes)
+	{
+		for (unsigned i = 0; i < m.numTriangles; i++)
+		{
+			Triangle* t = &m.triangles[i];
+			triangleData[triangleOffset + i].color				= vec4(m.color, 0);
+			triangleData[triangleOffset + i].D_oneOverTwiceArea = vec4(t->D, t->oneOverTwiceArea, 0, 0);
+			triangleData[triangleOffset + i].Normal				= vec4(t->N, 0);
+			for (unsigned j = 0; j < 3; j++)
+			{
+				triangleData[triangleOffset + i].point[j]	= vec4(t->p[j], 0);
+				triangleData[triangleOffset + i].edge[j]	= vec4(t->e[j], 0);
+			}
+		}
+		triangleOffset += m.numTriangles;
+	}
+	globs->triangleBuffer = Buffer::create(triangleData);
+	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
 
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));
