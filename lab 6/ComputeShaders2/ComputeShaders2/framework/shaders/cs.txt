@@ -25,6 +25,11 @@ layout(std430, binding = 1) buffer T
 	Triangle triangles[];
 };
 
+float mag(in vec3 qI)
+{
+	return sqrt(qI[0] * qI[0] + qI[1] * qI[1] + qI[2] * qI[2]);
+}
+
 void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
 	inout vec3 color, inout float closestT, inout bool inter)
 {
@@ -36,8 +41,9 @@ void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
 
 		//q = rayStart - sphereCenter
 		//q * q - r^2 + 2(q * rayDir)t + t^2(rayDir * rayDir) = 0
-		vec3 q = eyePos - spheres[i].centerAndRadius.xyz;
-		float radius = spheres[i].centerAndRadius.w;
+		Sphere s = spheres[i];
+		vec3 q = eyePos - s.centerAndRadius.xyz;
+		float radius = s.centerAndRadius.w;
 		float A = dot(rayDir, rayDir);
 		float B = 2 * dot(q, rayDir);
 		float C = dot(q, q) - (radius * radius);
@@ -94,15 +100,16 @@ void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
 	}
 };
 
-void traceTriangles(vec3 eyePos, vec3 rayDir, vec3 ip, vec3 N, 
-            vec3 color, inout float closestT, inout bool inter)
+void traceTriangles(vec3 eyePos, vec3 rayDir, inout vec3 ip, inout vec3 N, 
+           inout vec3 color, inout float closestT, inout bool inter)
 {
 	int ti = -1;		//triangle intersection
 
 	for(int i = 0; i < triangles.length(); ++i){
-		vec3 p = triangles[i].p[0].xyz;
-		vec3 q = triangles[i].p[1].xyz;
-		vec3 r = triangles[i].p[2].xyz;
+		Triangle tmp = triangles[i];
+		vec3 p = tmp.p[0].xyz;
+		vec3 q = tmp.p[1].xyz;
+		vec3 r = tmp.p[2].xyz;
 
 		vec3 N = cross((q-r), (r-p));	//Triangles Normal
 		float denominator = dot(N, rayDir);
@@ -117,13 +124,13 @@ void traceTriangles(vec3 eyePos, vec3 rayDir, vec3 ip, vec3 N,
 			{
 				vec3 currentIP = eyePos + (t * rayDir); //intersection point
 				float sumQi = 0;
-				for (int j = 0; j < triangles[i].e.length(); j++)	//make sure ip is intersecting the triangle
+				for (int j = 0; j < tmp.e.length(); j++)	//make sure ip is intersecting the triangle
 				{
-					vec3 qi = cross(triangles[i].e[j].xyz, (currentIP - triangles[i].p[j].xyz));
-					sumQi += qi[0]+qi[1]+qi[2];
+					vec3 qi = cross(tmp.e[j].xyz, (currentIP - triangles[i].p[j].xyz));
+					sumQi += mag(qi);
 				}
 
-				float A = sumQi * triangles[i].D_oneOverTwiceArea.y;
+				float A = sumQi * tmp.D_oneOverTwiceArea.y;
 				if (A <= 1.001)
 				{
 					ip = currentIP;
@@ -151,7 +158,7 @@ bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color)
 {
     float closestT = 6.55e4;
     bool inter = false;
-	traceSpheres(s, v, ip, N, color, closestT, inter);
+	//traceSpheres(s, v, ip, N, color, closestT, inter);
 	traceTriangles(s, v, ip, N, color, closestT, inter);
 
     return inter;
@@ -160,12 +167,13 @@ bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color)
 void main(){
 	ivec2 pixelCoord = ivec2(gl_GlobalInvocationID.xy);
 	ivec2 picSize = imageSize(img).xy;
-	float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
 	float dy = 2.0/(picSize.y-1);
 	float dx = 2.0/(picSize.x-1);
+
+	float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
 	float y = -1.0 + pixelCoord.y * dy;
 	float x = -1.0 + pixelCoord.x * dx;
-	vec3 rayDir = x*cameraRight + y*cameraUp + d*cameraLook;
+	vec3 rayDir = x * cameraRight + y * cameraUp + d * cameraLook;
 	vec3 ip = rayDir.xyz, N = ip.xyz, color = vec3(0,0,0);
 
 	traceRay(eyePos, rayDir, ip, N, color);

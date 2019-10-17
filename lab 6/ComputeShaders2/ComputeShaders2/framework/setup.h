@@ -60,6 +60,8 @@ void setup(int winwidth, int winheight){
 	globs->triangleBuffer = Buffer::create(triangleData);
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
 
+	//std::cout << "\n" << sqrt(15 ^ 2) << "\n" <<std::endl;
+
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));
 }
