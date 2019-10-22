@@ -1,7 +1,14 @@
 
+struct Ray
+{
+	vec4 start, dir, coords;
+};
+
 struct Sphere
 {
-	vec4 centerAndRadius, color;
+	vec4 center_radius;					//center is a vec3, radius is a float
+	vec4 color;							//R,G,B,A
+	vec4 reflection;					//reflection is a float, followed by padding
 };
 
 struct Triangle
@@ -9,7 +16,7 @@ struct Triangle
 	vec4 p[3];
 	vec4 e[3];
 	vec4 color;
-	vec4 N;								//Normal is vec3
+	vec4 N_reflection;					//Normal is vec3, reflection is a float
 	vec4 D_oneOverTwiceArea;			//D is float, oneOverTwiceArea is float, 0, 0
 };
 
@@ -25,13 +32,27 @@ layout(std430, binding = 1) buffer T
 	Triangle triangles[];
 };
 
+layout(std430, binding = 2, row_major) buffer InData2
+{
+	int currentRayCount;
+	int padding[3];
+	Ray currentRays[];
+};
+
+layout(std430, binding = 3, row_major) buffer InData3
+{
+	int nextRayCount;
+	int padding[3];
+	Ray nextPassRays[];
+};
+
 float mag(in vec3 qI)
 {
 	return sqrt(qI[0] * qI[0] + qI[1] * qI[1] + qI[2] * qI[2]);
 }
 
 void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
-	inout vec3 color, inout float closestT, inout bool inter)
+	inout vec3 color, inout float closestT, inout bool inter, inout float alpha, inout float refl)
 {
     int ci=-1;
 
@@ -42,8 +63,8 @@ void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
 		//q = rayStart - sphereCenter
 		//q * q - r^2 + 2(q * rayDir)t + t^2(rayDir * rayDir) = 0
 		Sphere s = spheres[i];
-		vec3 q = eyePos - s.centerAndRadius.xyz;
-		float radius = s.centerAndRadius.w;
+		vec3 q = eyePos - s.center_radius.xyz;
+		float radius = s.center_radius.w;
 		float A = dot(rayDir, rayDir);
 		float B = 2 * dot(q, rayDir);
 		float C = dot(q, q) - (radius * radius);
@@ -94,14 +115,16 @@ void traceSpheres(in vec3 eyePos, in vec3 rayDir, inout vec3 ip, inout vec3 N,
 	else
 	{
 		ip = eyePos + closestT * rayDir;						//intersection point
-		N = normalize(ip - spheres[ci].centerAndRadius.xyz);	//Normal at intersection point
+		N = normalize(ip - spheres[ci].center_radius.xyz);		//Normal at intersection point
 		color = spheres[ci].color.xyz;
+		alpha = spheres[ci].color.w;
+		refl  = spheres[ci].reflection.x;						//y,z,w are padding
 		inter = true;
 	}
 };
 
 void traceTriangles(vec3 eyePos, vec3 rayDir, inout vec3 ip, inout vec3 N, 
-           inout vec3 color, inout float closestT, inout bool inter)
+           inout vec3 color, inout float closestT, inout bool inter, inout float alpha, inout float refl)
 {
 	int ti = -1;		//triangle intersection
 
@@ -148,34 +171,130 @@ void traceTriangles(vec3 eyePos, vec3 rayDir, inout vec3 ip, inout vec3 N,
 	}
 	else
 	{
-		N = triangles[ti].N.xyz;
+		N = triangles[ti].N_reflection.xyz;
 		color = triangles[ti].color.xyz;
+		alpha = triangles[ti].color.w;
+		refl  = triangles[ti].N_reflection.w;
 		inter = true;
 	}
 };
 
-bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color)
+bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color, inout float alpha, inout float refl)
 {
     float closestT = 6.55e4;
     bool inter = false;
-	//traceSpheres(s, v, ip, N, color, closestT, inter);
-	traceTriangles(s, v, ip, N, color, closestT, inter);
+	traceSpheres(s, v, ip, N, color, closestT, inter, alpha, refl);
+	traceTriangles(s, v, ip, N, color, closestT, inter, alpha, refl);
 
     return inter;
+};
+
+vec3 reflect(in vec3 Light, in vec3 N)
+{
+	float dp = dot(Light, N);
+	vec3 c = dp * N;
+	return c + c - Light;
+};
+
+vec3 shadePixel(vec3 eyePos, vec3 ip, vec3 N, vec3 color)
+{
+	vec3 L = normalize(lightPosition - ip);
+	float sp, dp = dot(L, N);					//sp = shadePixel, dp = diffusePixel
+	if(dp < 0)
+	{
+		dp = 0;
+		sp = 0;
+	}
+	else
+	{
+		vec3 V = normalize(eyePos - ip);
+		//vec3 R = reflect(L, N);
+		
+		//sp = dot(V, R);
+		if(sp < 0)
+			sp = 0;
+		sp = pow(sp, 16);
+	}
+	return dp * color + vec3(sp, sp, sp);
+};
+
+vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir)
+{
+	int bouncesLeft = 5;
+	vec3 ip, N, color;
+	float alpha, refl, closestT;
+
+	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
+		return vec3(0, 0, 0);
+	else
+	{
+		vec3 L = normalize(lightPosition - ip);
+		vec3 ip_, N_, color_;
+		float alpha_, refl_, closestT_;
+
+		vec3 baseColor;
+		if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
+			baseColor = shadePixel(rayStart, ip, N, color);
+		else
+			baseColor = 0.1  * color;
+
+		if(refl == 0.0) || bouncesLeft <= 0)
+			return baseColor;
+
+		vec3 R = normalize(reflect(rayStart - ip, N));
+		return baseColor + refl * computeRayColor(ip + .01  * R, R, bouncesLeft - 1);
+	}
+};
+
+bool takeItem(out Ray r)
+{
+	int idx = atomicAdd(currentRayCount, -1);
+	if(idx <= 0)
+	{
+		atomicAdd(currentRayCount, 1);
+		return false;
+	}
+	r = currentRays[idx - 1];
+	return true;
+};
+
+bool putItem(Ray r)
+{
+	int idx = atomicAdd(nextRayCount, 1);
+	if(idx >= nextPassRays.length())
+	{
+		atomicAdd(nextRayCount, -1);	//buffer is full, discrard ray
+		return false;
+	}
+	nextPassRays[idx] = r;
+	return true;
+};
+
+void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
+{
+	if(firstPass)
+	{
+		float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
+		float dx = 2.0/(picSize.x-1);
+		float dy = 2.0/(picSize.y-1);
+
+		float y = -1.0 + pixelCoord.y * dy;
+		float x = -1.0 + pixelCoord.x * dx;
+
+		vec3 rayDir = normalize(x * cameraRight + y * cameraUp + d * cameraLook);
+
+		imageStore(img, ivec3(pixelCoord,0), vec4(computeRayColor(eyePos, rayDir) ,1.0)); //Do this after lastPass of reflection
+	}
+	else
+	{
+		if(!(currentRays.length > 0))
+			return;
+
+	}
 };
 
 void main(){
 	ivec2 pixelCoord = ivec2(gl_GlobalInvocationID.xy);
 	ivec2 picSize = imageSize(img).xy;
-	float dy = 2.0/(picSize.y-1);
-	float dx = 2.0/(picSize.x-1);
-
-	float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
-	float y = -1.0 + pixelCoord.y * dy;
-	float x = -1.0 + pixelCoord.x * dx;
-	vec3 rayDir = x * cameraRight + y * cameraUp + d * cameraLook;
-	vec3 ip = rayDir.xyz, N = ip.xyz, color = vec3(0,0,0);
-
-	traceRay(eyePos, rayDir, ip, N, color);
-	imageStore(img, ivec3(pixelCoord,0), vec4(color,1.0));
+	raytrace(pixelCoord, picSize);
 }

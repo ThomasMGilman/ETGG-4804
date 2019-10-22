@@ -25,7 +25,12 @@ void draw(){
     globs->scene.camera.setUniforms();
     Program::updateUniforms();
     globs->fbo->texture->bindImage(0);
+
+	unsigned zero[] = { 0,0,0,0 };
+	std::shared_ptr<Buffer> bufferA = rayBuffer1;
+
     globs->cs.dispatch(globs->fbo->w/32, globs->fbo->h, 1 );
+
     globs->fbo->texture->unbindImage(0);
     glMemoryBarrier( GL_ALL_BARRIER_BITS );
 

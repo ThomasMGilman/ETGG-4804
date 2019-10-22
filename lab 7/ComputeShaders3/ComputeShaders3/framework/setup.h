@@ -1,13 +1,13 @@
 
 struct GPUSphere
 {
-	alignas(16) vec4 centerAndRadius, color;
+	alignas(16) vec4 center_radius, color, reflection;
 };
 
 struct GPUTriangle
 {
 	alignas(16) vec4 point[3], edge[3];
-	alignas(16) vec4 color, Normal, D_oneOverTwiceArea;
+	alignas(16) vec4 color, N_reflection, D_oneOverTwiceArea;
 };
 
 void setup(int winwidth, int winheight){
@@ -29,8 +29,9 @@ void setup(int winwidth, int winheight){
 	for (unsigned i = 0; i < globs->scene.spheres.size(); i++)
 	{
 		Sphere* s = &globs->scene.spheres[i];
-		sphereData[i].centerAndRadius = vec4(s->c, s->r);
-		sphereData[i].color = vec4(s->color, 1.0);
+		sphereData[i].center_radius = vec4(s->c, s->r);
+		sphereData[i].color			= vec4(s->color, s->alpha);
+		sphereData[i].reflection	= vec4(s->refl, 0, 0, 0);
 	}
 	globs->sphereBuffer = Buffer::create(sphereData);
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);
@@ -48,7 +49,7 @@ void setup(int winwidth, int winheight){
 			Triangle* t = &m.triangles[i];
 			triangleData[triangleOffset + i].color				= vec4(m.color, 0);
 			triangleData[triangleOffset + i].D_oneOverTwiceArea = vec4(t->D, t->oneOverTwiceArea, 0, 0);
-			triangleData[triangleOffset + i].Normal				= vec4(t->N, 0);
+			triangleData[triangleOffset + i].N_reflection		= vec4(t->N, m.refl);
 			for (unsigned j = 0; j < 3; j++)
 			{
 				triangleData[triangleOffset + i].point[j]	= vec4(t->p[j], 0);
