@@ -196,7 +196,7 @@ vec3 reflect(in vec3 Light, in vec3 N)
 	return c + c - Light;
 };
 
-vec3 shadePixel(vec3 eyePos, vec3 ip, vec3 N, vec3 color)
+vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 N, in vec3 color)
 {
 	vec3 L = normalize(lightPosition - ip);
 	float sp, dp = dot(L, N);					//sp = shadePixel, dp = diffusePixel
@@ -256,15 +256,17 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 		float alpha_, refl_, closestT_;
 
 		vec3 baseColor;
-		if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
-			baseColor = shadePixel(rayStart, ip, N, color);
-		else
-			baseColor = 0.1  * color;
-
 		if(!firstPass)
 		{
 			baseColor = r.accumulatedColor.xyz;
 			refl = r.coords_percentageRemaining.z - refl;
+		}
+		else
+		{
+			if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
+				baseColor = shadePixel(rayStart, ip, N, color);
+			else
+				baseColor = 0.1  * color;
 		}
 
 		ret_refl = refl;

@@ -18,7 +18,7 @@ struct GPUTriangle
 struct rayBuff
 {
 	alignas(4) int rayCount, padding[3];
-	alignas(64) GPURay rays[0];
+	alignas(16) GPURay rays[0];
 };
 
 void setup(int winwidth, int winheight){
