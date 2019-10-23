@@ -1,7 +1,7 @@
 
 struct Ray
 {
-	vec4 start, dir, coords;
+	vec4 start, dir, coords_percentageRemaining, accumulatedColor;
 };
 
 struct Sphere
@@ -35,14 +35,14 @@ layout(std430, binding = 1) buffer T
 layout(std430, binding = 2, row_major) buffer InData2
 {
 	int currentRayCount;
-	int padding[3];
+	int currentPadding[3];
 	Ray currentRays[];
 };
 
 layout(std430, binding = 3, row_major) buffer InData3
 {
 	int nextRayCount;
-	int padding[3];
+	int nextPadding[3];
 	Ray nextPassRays[];
 };
 
@@ -218,34 +218,6 @@ vec3 shadePixel(vec3 eyePos, vec3 ip, vec3 N, vec3 color)
 	return dp * color + vec3(sp, sp, sp);
 };
 
-vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir)
-{
-	int bouncesLeft = 5;
-	vec3 ip, N, color;
-	float alpha, refl, closestT;
-
-	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
-		return vec3(0, 0, 0);
-	else
-	{
-		vec3 L = normalize(lightPosition - ip);
-		vec3 ip_, N_, color_;
-		float alpha_, refl_, closestT_;
-
-		vec3 baseColor;
-		if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
-			baseColor = shadePixel(rayStart, ip, N, color);
-		else
-			baseColor = 0.1  * color;
-
-		if(refl == 0.0) || bouncesLeft <= 0)
-			return baseColor;
-
-		vec3 R = normalize(reflect(rayStart - ip, N));
-		return baseColor + refl * computeRayColor(ip + .01  * R, R, bouncesLeft - 1);
-	}
-};
-
 bool takeItem(out Ray r)
 {
 	int idx = atomicAdd(currentRayCount, -1);
@@ -270,8 +242,54 @@ bool putItem(Ray r)
 	return true;
 };
 
+vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r, inout float ret_refl)
+{
+	vec3 ip, N, color;
+	float alpha, refl, closestT;
+
+	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
+		return vec3(0, 0, 0);
+	else
+	{
+		vec3 L = normalize(lightPosition - ip);
+		vec3 ip_, N_, color_;
+		float alpha_, refl_, closestT_;
+
+		vec3 baseColor;
+		if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
+			baseColor = shadePixel(rayStart, ip, N, color);
+		else
+			baseColor = 0.1  * color;
+
+		if(!firstPass)
+		{
+			baseColor = r.accumulatedColor.xyz;
+			refl = r.coords_percentageRemaining.z - refl;
+		}
+
+		ret_refl = refl;
+
+		if(refl == 0.0 || lastPass)
+			return baseColor;
+
+		vec3 R = normalize(reflect(N, rayStart - ip));
+
+		Ray newRay;
+		newRay.start						= vec4(ip, 0);
+		newRay.dir							= vec4(R, 0);
+		newRay.coords_percentageRemaining	= vec4(coords, refl, 0);
+		newRay.accumulatedColor				= vec4(baseColor * (1 - refl), alpha);
+		putItem(newRay);
+
+		return baseColor;
+	}
+};
+
 void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
 {
+	vec3 rayDir, color;
+	Ray r;
+	float refl = 0;
 	if(firstPass)
 	{
 		float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
@@ -281,16 +299,21 @@ void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
 		float y = -1.0 + pixelCoord.y * dy;
 		float x = -1.0 + pixelCoord.x * dx;
 
-		vec3 rayDir = normalize(x * cameraRight + y * cameraUp + d * cameraLook);
-
-		imageStore(img, ivec3(pixelCoord,0), vec4(computeRayColor(eyePos, rayDir) ,1.0)); //Do this after lastPass of reflection
+		rayDir = normalize(x * cameraRight + y * cameraUp + d * cameraLook);
+		color = computeRayColor(eyePos, rayDir, pixelCoord, r, refl);
 	}
 	else
 	{
-		if(!(currentRays.length > 0))
+		if(!(currentRays.length() > 0))
 			return;
+		takeItem(r);
 
+		color = computeRayColor(r.start.xyz, r.dir.xyz, pixelCoord, r, refl);
 	}
+	
+
+	if(lastPass || refl == 0.0)
+		imageStore(img, ivec3(pixelCoord,0), vec4(color, 1.0)); //Do this after lastPass of reflection
 };
 
 void main(){

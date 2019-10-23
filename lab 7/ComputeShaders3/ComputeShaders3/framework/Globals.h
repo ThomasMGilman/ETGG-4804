@@ -21,6 +21,6 @@ class Globals {
     bool paused=false;
 	unsigned reflectionPasses = 5;
 
-	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer;
+	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer, rayBufferA, rayBufferB;
 
 };

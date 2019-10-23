@@ -99,6 +99,7 @@ class Program{
             {GL_FLOAT_VEC2, 2*4},
             {GL_FLOAT,      1*4},
             {GL_INT,        1*4},
+			{GL_BOOL,		1},
             {GL_FLOAT_MAT2, 2*16},
             {GL_FLOAT_MAT3, 3*16},
             {GL_FLOAT_MAT4, 4*16}
@@ -136,6 +137,9 @@ class Program{
     static void setUniform(std::string name, unsigned value ){
         setUniform(name,&value,sizeof(value), GL_INT, 1);
     }
+	static void setUniform(std::string name, bool value) {
+		setUniform(name, &value, sizeof(value), GL_BOOL, 1);
+	}
     static void setUniform(std::string name, vec2 value ){
         setUniform(name,&value,sizeof(value), GL_FLOAT_VEC2, 1);
     }
@@ -162,6 +166,7 @@ class Program{
             {GL_FLOAT_VEC2, "GL_FLOAT_VEC2"},
             {GL_FLOAT,      "GL_FLOAT"},
             {GL_INT,        "GL_INT"},
+			{GL_BOOL,		"GL_BOOL"},
             {GL_FLOAT_MAT2, "GL_FLOAT_MAT2"},
             {GL_FLOAT_MAT3, "GL_FLOAT_MAT3"},
             {GL_FLOAT_MAT4, "GL_FLOAT_MAT4"}

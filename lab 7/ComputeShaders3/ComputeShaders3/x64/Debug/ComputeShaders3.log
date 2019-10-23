@@ -1,0 +1,16 @@
+﻿main.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SetAttribute referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_CreateContext referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_GetDrawableSize referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SetSwapInterval referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SwapWindow referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "void __cdecl update(int)" (?update@@YAXH@Z)
+main.obj : error LNK2019: unresolved external symbol SDL_GetPerformanceCounter referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_GetPerformanceFrequency referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_Delay referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "void __cdecl update(int)" (?update@@YAXH@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\\SDL2-2.0.10\lib\x86\SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\\SDL2-2.0.10\lib\x86\SDL2main.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 7\ComputeShaders3\x64\Debug\ComputeShaders3.exe : fatal error LNK1120: 13 unresolved externals

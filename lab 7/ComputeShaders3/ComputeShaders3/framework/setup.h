@@ -1,4 +1,9 @@
 
+struct GPURay
+{
+	alignas(16) vec4 rayStart, rayDir, pixelCoords, accumulatedColor;
+};
+
 struct GPUSphere
 {
 	alignas(16) vec4 center_radius, color, reflection;
@@ -8,6 +13,12 @@ struct GPUTriangle
 {
 	alignas(16) vec4 point[3], edge[3];
 	alignas(16) vec4 color, N_reflection, D_oneOverTwiceArea;
+};
+
+struct rayBuff
+{
+	alignas(4) int rayCount, padding[3];
+	alignas(16) GPURay rays[0];
 };
 
 void setup(int winwidth, int winheight){
@@ -60,6 +71,10 @@ void setup(int winwidth, int winheight){
 	}
 	globs->triangleBuffer = Buffer::create(triangleData);
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
+
+	std::vector<rayBuff> rayBuffA(1), rayBuffB(1);
+	globs->rayBufferA = Buffer::create(rayBuffA);
+	globs->rayBufferB = Buffer::create(rayBuffB);
 
 	//std::cout << "\n" << sqrt(15 ^ 2) << "\n" <<std::endl;
 

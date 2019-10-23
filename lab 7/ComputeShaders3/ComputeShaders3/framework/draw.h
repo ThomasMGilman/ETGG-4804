@@ -13,6 +13,7 @@ void draw2()
 
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);		//Bind SphereBuffer
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);	//Bind TriangleBuffer
+	
 }
 
 
@@ -27,9 +28,30 @@ void draw(){
     globs->fbo->texture->bindImage(0);
 
 	unsigned zero[] = { 0,0,0,0 };
-	std::shared_ptr<Buffer> bufferA = rayBuffer1;
+	for (int i = 0; i < globs->reflectionPasses; i++)
+	{
+		Program::setUniform("firstPass", (i == 0));
+		Program::setUniform("lastPass", (i == globs->reflectionPasses - 1));
+		Program::updateUniforms();
+		std::cout << "\n\tSetUniforms\n" << std::endl;
+		globs->rayBufferA->bindBase(GL_SHADER_STORAGE_BUFFER, 2);	//currentRays
+		globs->rayBufferB->bindBase(GL_SHADER_STORAGE_BUFFER, 3);	//nextPassRays
 
-    globs->cs.dispatch(globs->fbo->w/32, globs->fbo->h, 1 );
+		glClearBufferSubData(GL_SHADER_STORAGE_BUFFER,				//Buffer to Clear
+							GL_R32UI,								//internal format of buffer
+							0,										//offset into Buffer
+							4,										//Size of ptr
+							GL_R32UI,								//format of data to put
+							GL_UNSIGNED_INT,						//type of data
+							zero);									//data to fill in buffer to clear
+
+		std::cout << "\n\tBound Buffers, cleared nextBuffer\n" << std::endl;
+		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
+		swap(globs->rayBufferA, globs->rayBufferB);
+	}
+	
+
+    //globs->cs.dispatch(globs->fbo->w/32, globs->fbo->h, 1 );
 
     globs->fbo->texture->unbindImage(0);
     glMemoryBarrier( GL_ALL_BARRIER_BITS );

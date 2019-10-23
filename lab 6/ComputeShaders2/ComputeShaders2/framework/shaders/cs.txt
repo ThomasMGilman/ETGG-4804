@@ -154,12 +154,36 @@ void traceTriangles(vec3 eyePos, vec3 rayDir, inout vec3 ip, inout vec3 N,
 	}
 };
 
+vec3 shadePixel(vec3 eyePos, vec3 ip, vec3 N, vec3 color)
+{
+	vec3 L = normalize(lightPosition - ip);
+	float sp, dp = dot(L, N);					//sp = shadePixel, dp = diffusePixel
+	if(dp < 0)
+	{
+		dp = 0;
+		sp = 0;
+	}
+	else
+	{
+		vec3 V = normalize(eyePos - ip);
+		//vec3 R = reflect(L, N);
+		
+		//sp = dot(V, R);
+		if(sp < 0)
+			sp = 0;
+		sp = pow(sp, 16);
+	}
+	return dp * color + vec3(sp, sp, sp);
+};
+
 bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color)
 {
     float closestT = 6.55e4;
     bool inter = false;
-	//traceSpheres(s, v, ip, N, color, closestT, inter);
+	traceSpheres(s, v, ip, N, color, closestT, inter);
 	traceTriangles(s, v, ip, N, color, closestT, inter);
+
+	color = shadePixel(s, ip, N, color);
 
     return inter;
 };
