@@ -30,14 +30,15 @@ void draw(){
 	unsigned zero[] = { 0,0,0,0 };
 	for (int i = 0; i < globs->reflectionPasses; i++)
 	{
+		//std::cout << (i == 0) << " FirstPass Index: " << i << std::endl;
+		//std::cout << (i == globs->reflectionPasses - 1) << " LastPass Index: " << i << " numPasses: " << globs->reflectionPasses << std::endl;
 		Program::setUniform("firstPass", (i == 0));
 		Program::setUniform("lastPass", (i == globs->reflectionPasses - 1));
 		Program::updateUniforms();
 		
-		//std::cout << "\n\tSetUniforms\n" << std::endl;
-		
 		globs->rayBufferA->bindBase(GL_SHADER_STORAGE_BUFFER, 2);	//currentRays
 		globs->rayBufferB->bindBase(GL_SHADER_STORAGE_BUFFER, 3);	//nextPassRays
+		
 
 		glClearBufferSubData(GL_SHADER_STORAGE_BUFFER,				//Buffer to Clear
 								GL_R32UI,							//internal format of buffer
@@ -46,10 +47,15 @@ void draw(){
 								GL_RED,								//format of data to put
 								GL_UNSIGNED_INT,					//data type
 								zero);								//data to fill in buffer to clear
-
-		//std::cout << "\n\tBound Buffers, cleared nextBuffer\n" << std::endl;
 		
 		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+		
+		rayBuff* rb = (rayBuff*)globs->rayBufferB->ptr;
+		rayBuff* ra = (rayBuff*)globs->rayBufferA->ptr;
+		rb->rayCount = 5;
+		//rb->rays
 		swap(globs->rayBufferA, globs->rayBufferB);
 	}
 	

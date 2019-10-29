@@ -1,7 +1,7 @@
 
 struct GPURay
 {
-	alignas(16) vec4 rayStart, rayDir, pixelCoords, accumulatedColor;
+	alignas(16) vec4 rayStartd, rayDir, pixelCoords, accumulatedColor;
 };
 
 struct GPUSphere
@@ -17,9 +17,21 @@ struct GPUTriangle
 
 struct rayBuff
 {
-	alignas(4) int rayCount, padding[3];
-	alignas(16) GPURay rays[0];
+	alignas(4) int rayCount = 0, arraySize = 0;
+	alignas(16) GPURay *rays;
 };
+
+std::vector<rayBuff> makeVec_rayBuff(int winWidth, int winHeight)
+{
+	std::vector<rayBuff> *tmp = new std::vector<rayBuff>();
+	rayBuff* r = new rayBuff;
+	unsigned arraySize = winWidth * winHeight;
+	r->rayCount = 0; r->rays = new GPURay[arraySize];
+	r->arraySize = arraySize;
+	tmp->push_back(*r);
+	std::cout << "ArraySize: " << arraySize << std::endl;
+	return *tmp;
+}
 
 void setup(int winwidth, int winheight){
     
@@ -72,9 +84,10 @@ void setup(int winwidth, int winheight){
 	globs->triangleBuffer = Buffer::create(triangleData);
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
 
-	std::vector<rayBuff> rayBuffA(1), rayBuffB(1);
-	globs->rayBufferA = Buffer::create(rayBuffA);
-	globs->rayBufferB = Buffer::create(rayBuffB);
+	std::vector<rayBuff> rayBuffA = makeVec_rayBuff(winwidth, winheight); //make sure to destroy at end
+	std::vector<rayBuff> rayBuffB = makeVec_rayBuff(winwidth, winheight);
+	globs->rayBufferA = Buffer::createMappable(rayBuffA);
+	globs->rayBufferB = Buffer::createMappable(rayBuffB);
 
 	//std::cout << "\n" << sqrt(15 ^ 2) << "\n" <<std::endl;
 

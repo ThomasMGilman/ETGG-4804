@@ -35,14 +35,14 @@ layout(std430, binding = 1) buffer T
 layout(std430, binding = 2, row_major) buffer InData2
 {
 	int currentRayCount;
-	int currentPadding[3];
+	int currentArraySize;
 	Ray currentRays[];
 };
 
 layout(std430, binding = 3, row_major) buffer InData3
 {
 	int nextRayCount;
-	int nextPadding[3];
+	int nextPassArraySize;
 	Ray nextPassRays[];
 };
 
@@ -233,7 +233,7 @@ bool takeItem(out Ray r)
 bool putItem(Ray r)
 {
 	int idx = atomicAdd(nextRayCount, 1);
-	if(idx >= nextPassRays.length())
+	if(idx >= nextPassArraySize)
 	{
 		atomicAdd(nextRayCount, -1);	//buffer is full, discrard ray
 		return false;
@@ -246,7 +246,7 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 {
 	vec3 ip, N, color;
 	float alpha, refl, closestT;
-
+	
 	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
 		return vec3(0, 0, 0);
 	else
@@ -272,7 +272,11 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 		ret_refl = refl;
 
 		if(refl == 0.0 || lastPass)
+		{
+			
 			return baseColor;
+		}
+			
 
 		vec3 R = normalize(reflect(N, rayStart - ip));
 
@@ -281,8 +285,9 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 		newRay.dir							= vec4(R, 0);
 		newRay.coords_percentageRemaining	= vec4(coords, refl, 0);
 		newRay.accumulatedColor				= vec4(baseColor * (1 - refl), alpha);
+		//newRay.accumulatedColor = vec4(1,1,1,1);
 		putItem(newRay);
-
+		
 		return baseColor;
 	}
 };
@@ -292,7 +297,7 @@ void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
 	vec3 rayDir, color;
 	Ray r;
 	float refl = 0;
-	if(firstPass)
+	if(firstPass )//|| !(currentRays.length() > 0))
 	{
 		float d = 1.0 / 0.69974612;			//denom = tan(35 degrees) = field of viewfloat
 		float dx = 2.0/(picSize.x-1);

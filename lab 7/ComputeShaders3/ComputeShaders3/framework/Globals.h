@@ -19,7 +19,7 @@ class Globals {
     Scene scene{"scene2.txt"};
     std::set<int> keyset;
     bool paused=false;
-	unsigned reflectionPasses = 5;
+	unsigned reflectionPasses = 2;
 
 	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer, rayBufferA, rayBufferB;
 

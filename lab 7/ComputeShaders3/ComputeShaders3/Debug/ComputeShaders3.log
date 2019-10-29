@@ -3,8 +3,8 @@ D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\Compute
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\Triangle.h(23,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\Mesh.h(45,1): warning C4056: overflow in floating-point constant arithmetic
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\Mesh.h(46,1): warning C4056: overflow in floating-point constant arithmetic
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\setup.h(21,28): warning C4200: nonstandard extension used: zero-sized array in struct/union
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\setup.h(21,28): message : This member will be ignored by a defaulted constructor or copy/move assignment operator
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\setup.h(27,26): warning C4316: 'rayBuff': object allocated on the heap may not be aligned 16
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\setup.h(29,50): warning C4316: 'GPURay': object allocated on the heap may not be aligned 16
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\draw.h(31,20): warning C4018: '<': signed/unsigned mismatch
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\main.cpp(31,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 7\ComputeShaders3\ComputeShaders3\framework\main.cpp(31,47): warning C4244:         with
