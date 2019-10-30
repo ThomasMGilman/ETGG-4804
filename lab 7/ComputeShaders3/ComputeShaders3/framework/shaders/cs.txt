@@ -223,7 +223,7 @@ vec3 reflect(in vec3 rayDir, in vec3 N)
 {
 	float dp = dot(rayDir, N);
 	vec3 c = dp * N;
-	return c + c - rayDir;
+	return normalize(c + c - rayDir);
 };
 
 vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 L, in vec3 N, in vec3 color)
@@ -237,7 +237,7 @@ vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 L, in vec3 N, in vec3 color)
 	else
 	{
 		vec3 V = normalize(eyePos - ip);
-		vec3 R = normalize(reflect(L, N));
+		vec3 R = reflect(L, N);
 		
 		sp = dot(V, R);
 		if(sp < 0)
@@ -249,11 +249,14 @@ vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 L, in vec3 N, in vec3 color)
 
 vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r, inout float ret_refl)
 {
+	
 	vec3 ip, N, color;
 	float alpha, refl, closestT, reflectionAmt = 1.0;
 	
 	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
+	{
 		return vec3(0, 0, 0);
+	}
 	else
 	{
 		vec3 L = normalize(lightPosition - ip);
@@ -265,8 +268,6 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 		else																		//In Shadow
 			color *= 0.1;
 
-		if(refl == 0.0 || !reflections || lastPass)									//if not doing reflections, lastPass, or reflection is 0 return and drawImage
-			return color;
 
 		if(!firstPass)
 		{
@@ -274,13 +275,14 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 			color = r.accumulatedColor.xyz + reflectionAmt * color;					//update color with reflectionsColor
 		}
 		else
-		{
 			reflectionAmt *= refl;													//update reflection with materials reflection value
-			color *= reflectionAmt;
-		}
+
+		if(refl == 0.0 || !reflections || lastPass)									//if not doing reflections, lastPass, or reflection is 0 return and drawImage
+			return color;
+
 
 		ret_refl = reflectionAmt;													//Set Reflection to return
-		vec3 R = normalize(reflect(rayDir, N));										//Get new ReflectionDir
+		vec3 R = reflect(rayDir, N);												//Get new ReflectionDir
 
 		//Store Ray for next Pass to calculate next reflection amount
 		Ray newRay = Ray(vec4(ip + 0.01 * R, 0),									//startOfRay
@@ -319,11 +321,12 @@ void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
 			return;
 		takeItem(r);
 
+		pixelCoord = ivec2(r.coords_percentageRemaining.xy);
 		color = computeRayColor(r.start.xyz, r.dir.xyz, pixelCoord, r, refl);
 	}
 	
 
-	if((lastPass || refl == 0.0) || !reflections)
+	if(lastPass || refl == 0.0 || !reflections)
 		imageStore(img, ivec3(pixelCoord,0), vec4(color, 1.0)); //Do this after lastPass of reflection
 };
 

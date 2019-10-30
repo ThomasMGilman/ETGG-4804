@@ -4,7 +4,7 @@ void setup(int winwidth, int winheight){
     globs = std::make_unique<Globals>();
     globs->fbo = std::make_shared<Framebuffer>(winwidth,winheight,1,GL_RGBA);
     glEnable(GL_MULTISAMPLE);
-    glClearColor(0.2f,0.4f,0.6f,1.0f);
+    glClearColor(0.8f,0.4f,0.6f,1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_PROGRAM_POINT_SIZE);

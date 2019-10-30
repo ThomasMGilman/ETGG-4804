@@ -6,11 +6,11 @@ void draw2()
 	Program::setUniform("lightColor", vec3(1, 1, 1));
 	Program::setUniform("reflections", globs->allowReflections);		//enables or disables reflections
 	globs->scene.camera.setUniforms();
-	globs->mainProg.use();
-	Program::setUniform("worldMatrix", mat4::identity());
-	for (auto& M : globs->scene.meshes) {
-		M.draw();
-	}
+	//globs->mainProg.use();
+	//Program::setUniform("worldMatrix", mat4::identity());
+	//for (auto& M : globs->scene.meshes) {
+		//M.draw();
+	//}
 
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);		//Bind SphereBuffer
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);	//Bind TriangleBuffer
@@ -49,6 +49,8 @@ void doReflections()
 		rayBuff* rb = (rayBuff*)globs->rayBufferB->ptr;
 		rayBuff* ra = (rayBuff*)globs->rayBufferA->ptr;
 		swap(globs->rayBufferA, globs->rayBufferB);
+		glFinish();
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	}
 }
 
