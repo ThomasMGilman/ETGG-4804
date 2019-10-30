@@ -25,39 +25,20 @@ struct GPUTriangle
 
 struct rayBuff
 {
-	alignas(4) uint32_t rayCount = 0, arraySize = 0, padding[2];
-	alignas(16) GPURay rays[];
+	alignas(4) uint32_t rayCount = 0, padding[3]{0,0,0};
+	alignas(16) GPURay rays[1];
 };
 
 /*Creates a new Vector with a single rayBuffer inside
 	The RayBuffer is initialized with raySize of num pixels on window to draw,
 	and all vectors set to 0
 */
-std::vector<rayBuff>* makeVec_rayBuff(int winWidth, int winHeight)
+std::vector<rayBuff> makeVec_rayBuff()
 {
-	std::vector<rayBuff>* tmp = new std::vector<rayBuff>();
-
-	unsigned arraySize = winWidth * winHeight;
+	std::vector<rayBuff> tmp = std::vector<rayBuff>();
 	
-	rayBuff* r = (rayBuff*)malloc(sizeof(uint32_t)*4 + sizeof(GPURay) * arraySize);
-
-	std::cout << "\nsizeof GPURay = " << sizeof(GPURay) << std::endl;
-	std::cout << "RayBuffSize: " << sizeof(*r) << " sizeof 4*uint32_t+sizeof(GPURay)*arraySize = " << sizeof(uint32_t) * 4 + sizeof(GPURay) * arraySize << "\n" <<std::endl;
-	std::cout << "ArraySize: " << arraySize << std::endl;
-	//std::cout << "ArrayLength" << sizeof(*r->rays) << std::endl;
-
-	r->rayCount = 0;
-	r->arraySize = arraySize;
-	r->padding[0] = 0; r->padding[1] = 0;
-	for (int i = 0; i < arraySize; i++)
-	{
-		r->rays[i].accumulatedColor = vec4(0, 0, 0, 0);
-		r->rays[i].pixelCoords = vec4(0, 0, 0, 0);
-		r->rays[i].rayDir = vec4(0, 0, 0, 0);
-		r->rays[i].rayStartd = vec4(0, 0, 0, 0);
-	}
-
-	tmp->push_back(*r);
+	rayBuff r = rayBuff();
+	tmp.push_back(r);
 	
 	return tmp;
 }

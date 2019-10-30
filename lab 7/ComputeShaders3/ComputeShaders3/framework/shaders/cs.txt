@@ -35,18 +35,46 @@ layout(std430, binding = 1) buffer T
 layout(std430, binding = 2, row_major) buffer InData2
 {
 	int currentRayCount;
-	int currentArraySize;
-	int currentPadding[2];
+	int currentPadding[3];
 	Ray currentRays[];
 };
 
 layout(std430, binding = 3, row_major) buffer InData3
 {
 	int nextRayCount;
-	int nextPassArraySize;
-	int nextPadding[2];
+	int nextPadding[3];
 	Ray nextPassRays[];
 };
+
+bool takeItem(out Ray r)
+{
+	int idx = atomicAdd(currentRayCount, -1);
+	if(idx <= 0)
+	{
+		atomicAdd(currentRayCount, 1);
+		return false;
+	}
+	r = currentRays[idx - 1];
+	return true;
+};
+
+bool putItem(in Ray r)
+{
+	int idx = atomicAdd(nextRayCount, 1);
+	if(idx >= nextPassRays.length())
+	{
+		atomicAdd(nextRayCount, -1);	//buffer is full, discrard ray
+		return false;
+	}
+	nextPassRays[idx] = r;
+	return true;
+};
+
+void initBuffers()
+{
+	nextRayCount = 0;
+	currentRayCount = 0;
+}
 
 float mag(in vec3 qI)
 {
@@ -191,16 +219,15 @@ bool traceRay(vec3 s, vec3 v, inout vec3 ip, inout vec3 N, inout vec3 color, ino
     return inter;
 };
 
-vec3 reflect(in vec3 Light, in vec3 N)
+vec3 reflect(in vec3 rayDir, in vec3 N)
 {
-	float dp = dot(Light, N);
+	float dp = dot(rayDir, N);
 	vec3 c = dp * N;
-	return c + c - Light;
+	return c + c - rayDir;
 };
 
-vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 N, in vec3 color)
+vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 L, in vec3 N, in vec3 color)
 {
-	vec3 L = normalize(lightPosition - ip);
 	float sp, dp = dot(L, N);					//sp = shadePixel, dp = diffusePixel
 	if(dp < 0)
 	{
@@ -210,9 +237,9 @@ vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 N, in vec3 color)
 	else
 	{
 		vec3 V = normalize(eyePos - ip);
-		//vec3 R = reflect(L, N);
+		vec3 R = normalize(reflect(L, N));
 		
-		//sp = dot(V, R);
+		sp = dot(V, R);
 		if(sp < 0)
 			sp = 0;
 		sp = pow(sp, 16);
@@ -220,34 +247,10 @@ vec3 shadePixel(in vec3 eyePos, in vec3 ip, in vec3 N, in vec3 color)
 	return dp * color + vec3(sp, sp, sp);
 };
 
-bool takeItem(out Ray r)
-{
-	int idx = atomicAdd(currentRayCount, -1);
-	if(idx <= 0)
-	{
-		atomicAdd(currentRayCount, 1);
-		return false;
-	}
-	r = currentRays[idx - 1];
-	return true;
-};
-
-bool putItem(in Ray r)
-{
-	int idx = atomicAdd(nextRayCount, 1);
-	if(idx >= nextPassArraySize)
-	{
-		atomicAdd(nextRayCount, -1);	//buffer is full, discrard ray
-		return false;
-	}
-	nextPassRays[idx] = Ray(vec4(0,0,0,0), vec4(0,0,0,0), vec4(0,0,0,0), vec4(0,0,0,0));//r;
-	return true;
-};
-
 vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r, inout float ret_refl)
 {
 	vec3 ip, N, color;
-	float alpha, refl, closestT;
+	float alpha, refl, closestT, reflectionAmt = 1.0;
 	
 	if(!traceRay(rayStart, rayDir, ip, N, color, alpha, refl))
 		return vec3(0, 0, 0);
@@ -257,39 +260,35 @@ vec3 computeRayColor(in vec3 rayStart, in vec3 rayDir, in ivec2 coords, in Ray r
 		vec3 ip_, N_, color_;
 		float alpha_, refl_, closestT_;
 
-		vec3 baseColor;
-		if(reflections && !firstPass)
+		if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))				//Not in Shadow
+			color = shadePixel(rayStart, ip, L, N, color);
+		else																		//In Shadow
+			color *= 0.1;
+
+		if(refl == 0.0 || !reflections || lastPass)									//if not doing reflections, lastPass, or reflection is 0 return and drawImage
+			return color;
+
+		if(!firstPass)
 		{
-			baseColor = r.accumulatedColor.xyz;
-			refl = r.coords_percentageRemaining.z + refl;
+			reflectionAmt = r.coords_percentageRemaining.z * refl;					//getRemainingReflection and update it with reflection
+			color = r.accumulatedColor.xyz + reflectionAmt * color;					//update color with reflectionsColor
 		}
 		else
 		{
-			if(!traceRay(ip + 0.01 * L, L, ip_, N_, color_, alpha_, refl_))
-				baseColor = shadePixel(rayStart, ip, N, color);
-			else
-				baseColor = 0.1  * color;
-
-			//if(reflections)
-			//	refl = 1 - r.coords_percentageRemaining.z - refl;
+			reflectionAmt *= refl;													//update reflection with materials reflection value
+			color *= reflectionAmt;
 		}
-		ret_refl = refl;										//Set Reflection to return
 
-		if(refl == 0.0 || !reflections || lastPass)				//if not doing reflections, lastPass, or reflection is 0 return and drawImage
-			return baseColor;
+		ret_refl = reflectionAmt;													//Set Reflection to return
+		vec3 R = normalize(reflect(rayDir, N));										//Get new ReflectionDir
 
 		//Store Ray for next Pass to calculate next reflection amount
-		vec3 R = normalize(reflect(N, rayStart - ip));
-		if(reflections)
-		{
-			Ray newRay = Ray(vec4(ip, 0),						//startOfRay
-						vec4(R, 0),								//directionOfRay
-						vec4(coords, 1 - refl, 0),				//PixelCoordsToDrawTo
-						vec4(baseColor * (1 - refl), alpha));	//Color Accumulated after Reflections
-			putItem(newRay);
-		}
-
-		return baseColor;
+		Ray newRay = Ray(vec4(ip + 0.01 * R, 0),									//startOfRay
+						vec4(R, 0),													//directionOfRay
+						vec4(coords, reflectionAmt, 0),								//PixelCoordsToDrawTo and reflection amount
+						vec4(color, alpha));										//Color Accumulated after Reflections
+		putItem(newRay);
+		return color;
 	}
 };
 
@@ -308,6 +307,10 @@ void raytrace(in ivec2 pixelCoord, in ivec2 picSize)
 		float x = -1.0 + pixelCoord.x * dx;
 
 		rayDir = normalize(x * cameraRight + y * cameraUp + d * cameraLook);
+
+		if(reflections)
+			initBuffers();
+
 		color = computeRayColor(eyePos, rayDir, pixelCoord, r, refl);
 	}
 	else

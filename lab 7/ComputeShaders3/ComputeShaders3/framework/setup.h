@@ -53,10 +53,9 @@ void setup(int winwidth, int winheight){
 	//If Reflections enabled, create buffers for doing reflection loop
 	if (globs->allowReflections)
 	{
-		std::vector<rayBuff>* rayVecA = makeVec_rayBuff(winwidth, winheight);
-		std::vector<rayBuff>* rayVecB = makeVec_rayBuff(winwidth, winheight);
-		globs->rayBufferA = Buffer::createMappable(*rayVecA);//, 0, GL_SHADER_STORAGE_BUFFER);
-		globs->rayBufferB = Buffer::createMappable(*rayVecB);//, 0, GL_SHADER_STORAGE_BUFFER);
+		uint32_t sizeOfRayBuff = sizeof(uint32_t) * 4 + sizeof(GPURay) * winwidth * winheight;
+		globs->rayBufferA = Buffer::createMappable(sizeOfRayBuff);
+		globs->rayBufferB = Buffer::createMappable(sizeOfRayBuff);
 	}
 
 	Program::setUniform("lightPosition", globs->scene.lightPosition);

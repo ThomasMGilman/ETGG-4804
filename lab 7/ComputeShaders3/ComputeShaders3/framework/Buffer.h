@@ -30,8 +30,8 @@ class Buffer{
         return std::shared_ptr<Buffer>(p);
     }
 
-    static std::shared_ptr<Buffer> createMappable(unsigned size){
-        Buffer* p = new Buffer(size, 0, 0, true);
+    static std::shared_ptr<Buffer> createMappable(unsigned size, GLenum usage = GL_STATIC_DRAW, GLenum bufferType = GL_ARRAY_BUFFER){
+        Buffer* p = new Buffer(size, usage, bufferType, true);
         return std::shared_ptr<Buffer>(p);
     }
     
