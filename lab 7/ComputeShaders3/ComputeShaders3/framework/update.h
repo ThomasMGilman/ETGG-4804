@@ -41,23 +41,22 @@ void update(int elapsed){
     const float turnAmt = 0.005f;
     const float walkAmt = 0.01f;
     
-    if( globs->keyset.find(SDLK_w) != globs->keyset.end() )
-        globs->scene.camera.walk(walkAmt*elapsed);
-    if( globs->keyset.find(SDLK_s) != globs->keyset.end() )
-        globs->scene.camera.walk(-walkAmt*elapsed);
+	if (globs->keyset.find(SDLK_w) != globs->keyset.end())
+		globs->scene.walkCamera(walkAmt * elapsed);
+	if (globs->keyset.find(SDLK_s) != globs->keyset.end())
+		globs->scene.walkCamera(-walkAmt * elapsed);
     if( globs->keyset.find(SDLK_a) != globs->keyset.end() )
         globs->scene.camera.turn(turnAmt*elapsed);
     if( globs->keyset.find(SDLK_d) != globs->keyset.end() )
         globs->scene.camera.turn(-turnAmt*elapsed);
-    if( globs->keyset.find(SDLK_i) != globs->keyset.end() )
-        globs->scene.camera.strafe(0,walkAmt*elapsed,0);
-    if( globs->keyset.find(SDLK_k) != globs->keyset.end() )
-        globs->scene.camera.strafe(0,-walkAmt*elapsed,0);
-    if( globs->keyset.find(SDLK_j) != globs->keyset.end() )
-        globs->scene.camera.strafe(-walkAmt*elapsed,0,0);
-    if( globs->keyset.find(SDLK_l) != globs->keyset.end() )
-        globs->scene.camera.strafe(walkAmt*elapsed,0,0);
-        
+	if (globs->keyset.find(SDLK_i) != globs->keyset.end())
+		globs->scene.strafeCamera(0, walkAmt * elapsed, 0);
+	if( globs->keyset.find(SDLK_k) != globs->keyset.end() )
+		globs->scene.strafeCamera(0, -walkAmt * elapsed, 0);
+	if (globs->keyset.find(SDLK_j) != globs->keyset.end())
+		globs->scene.strafeCamera(-walkAmt * elapsed, 0, 0);
+	if (globs->keyset.find(SDLK_l) != globs->keyset.end())
+		globs->scene.strafeCamera(walkAmt * elapsed, 0, 0);
 }
 
   

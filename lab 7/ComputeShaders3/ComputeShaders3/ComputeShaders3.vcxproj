@@ -166,6 +166,8 @@
     <Text Include="framework\scene1.txt" />
     <Text Include="framework\scene2.txt" />
     <Text Include="framework\scene3.txt" />
+    <Text Include="framework\scene5.txt" />
+    <Text Include="framework\scene6.txt" />
     <Text Include="framework\shaders\cs.txt" />
     <Text Include="framework\shaders\fs.txt" />
     <Text Include="framework\shaders\textfs.txt" />

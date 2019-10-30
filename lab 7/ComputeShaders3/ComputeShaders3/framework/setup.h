@@ -1,38 +1,4 @@
 
-struct GPURay
-{
-	alignas(16) vec4 rayStartd, rayDir, pixelCoords, accumulatedColor;
-};
-
-struct GPUSphere
-{
-	alignas(16) vec4 center_radius, color, reflection;
-};
-
-struct GPUTriangle
-{
-	alignas(16) vec4 point[3], edge[3];
-	alignas(16) vec4 color, N_reflection, D_oneOverTwiceArea;
-};
-
-struct rayBuff
-{
-	alignas(4) int rayCount = 0, arraySize = 0;
-	alignas(16) GPURay *rays;
-};
-
-std::vector<rayBuff> makeVec_rayBuff(int winWidth, int winHeight)
-{
-	std::vector<rayBuff> *tmp = new std::vector<rayBuff>();
-	rayBuff* r = new rayBuff;
-	unsigned arraySize = winWidth * winHeight;
-	r->rayCount = 0; r->rays = new GPURay[arraySize];
-	r->arraySize = arraySize;
-	tmp->push_back(*r);
-	std::cout << "ArraySize: " << arraySize << std::endl;
-	return *tmp;
-}
-
 void setup(int winwidth, int winheight){
     
     globs = std::make_unique<Globals>();
@@ -84,12 +50,14 @@ void setup(int winwidth, int winheight){
 	globs->triangleBuffer = Buffer::create(triangleData);
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
 
-	std::vector<rayBuff> rayBuffA = makeVec_rayBuff(winwidth, winheight); //make sure to destroy at end
-	std::vector<rayBuff> rayBuffB = makeVec_rayBuff(winwidth, winheight);
-	globs->rayBufferA = Buffer::createMappable(rayBuffA);
-	globs->rayBufferB = Buffer::createMappable(rayBuffB);
-
-	//std::cout << "\n" << sqrt(15 ^ 2) << "\n" <<std::endl;
+	//If Reflections enabled, create buffers for doing reflection loop
+	if (globs->allowReflections)
+	{
+		std::vector<rayBuff>* rayVecA = makeVec_rayBuff(winwidth, winheight);
+		std::vector<rayBuff>* rayVecB = makeVec_rayBuff(winwidth, winheight);
+		globs->rayBufferA = Buffer::createMappable(*rayVecA);//, 0, GL_SHADER_STORAGE_BUFFER);
+		globs->rayBufferB = Buffer::createMappable(*rayVecB);//, 0, GL_SHADER_STORAGE_BUFFER);
+	}
 
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));

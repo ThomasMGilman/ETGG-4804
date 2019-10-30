@@ -122,6 +122,8 @@
     <Text Include="framework\shaders\textvs.txt" />
     <Text Include="framework\shaders\vs.txt" />
     <Text Include="framework\shaders\uniforms.txt" />
+    <Text Include="framework\scene5.txt" />
+    <Text Include="framework\scene6.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework\glfuncs.cpp">

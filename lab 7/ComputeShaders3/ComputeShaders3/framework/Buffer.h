@@ -7,8 +7,8 @@ class Buffer{
     
   private:
   
-    Buffer( int size, bool mappable, GLenum usage){
-        init( size, usage, mappable );
+    Buffer( int size, GLenum usage, GLenum bufferType, bool mappable){
+        init( size, usage, bufferType, mappable );
     }
     
   public:
@@ -18,27 +18,27 @@ class Buffer{
     GLenum usage;
     void* ptr;  //only for mappable
     
-    static std::shared_ptr<Buffer> create(unsigned size, GLenum usage=GL_STATIC_DRAW){
-        Buffer* p = new Buffer(size,false,usage);
+    static std::shared_ptr<Buffer> create(unsigned size, GLenum usage = GL_STATIC_DRAW, GLenum bufferType = GL_ARRAY_BUFFER){
+        Buffer* p = new Buffer(size, usage, bufferType, false);
         return std::shared_ptr<Buffer>(p);
     }
     
     template<typename T>
-    static std::shared_ptr<Buffer> create(const std::vector<T>& initialData, GLenum usage = GL_STATIC_DRAW){
-        Buffer* p = new Buffer(initialData.size()*sizeof(T),false,usage);
-        p->setData(initialData);
+    static std::shared_ptr<Buffer> create(const std::vector<T>& initialData, GLenum usage = GL_STATIC_DRAW, GLenum bufferType = GL_ARRAY_BUFFER){
+        Buffer* p = new Buffer(initialData.size()*sizeof(T), usage, bufferType, false);
+        p->setData(initialData, bufferType);
         return std::shared_ptr<Buffer>(p);
     }
 
     static std::shared_ptr<Buffer> createMappable(unsigned size){
-        Buffer* p = new Buffer(size,true,0);
+        Buffer* p = new Buffer(size, 0, 0, true);
         return std::shared_ptr<Buffer>(p);
     }
     
     template<typename T>
-    static std::shared_ptr<Buffer> createMappable(const std::vector<T>& initialData){
-        Buffer* p = new Buffer(initialData.size()*sizeof(T),true,0);
-        p->setData(initialData);
+    static std::shared_ptr<Buffer> createMappable(const std::vector<T>& initialData, GLenum usage = GL_STATIC_DRAW, GLenum bufferType = GL_ARRAY_BUFFER){
+        Buffer* p = new Buffer(initialData.size()*sizeof(T), usage, bufferType, true);
+        p->setData(initialData, bufferType);
         return std::shared_ptr<Buffer>(p);
     }
     
@@ -61,44 +61,44 @@ class Buffer{
     }
     
     template<typename T>
-    void setData(const std::vector<T>& newData ){
-        setData(newData.data(), newData.size()*sizeof(T));
+    void setData(const std::vector<T>& newData, GLenum bufferType){
+        setData(newData.data(), newData.size()*sizeof(T), bufferType);
     }
     
-    void setData(const void* p, size_t size){
-        glBindBuffer(GL_ARRAY_BUFFER, buffID);
+    void setData(const void* p, size_t size, GLenum bufferType){
+        glBindBuffer(bufferType, buffID);
         if( size == this->size ){
             if( ptr )
                 memcpy(ptr,p,size);
             else
-                glBufferSubData(GL_ARRAY_BUFFER, 0, size, p );
+                glBufferSubData(bufferType, 0, size, p );
         } else {
             if(ptr)
                 throw std::runtime_error("Cannot change size of mappable buffer");
-            glBufferData(GL_ARRAY_BUFFER, size, p, usage);
+            glBufferData(bufferType, size, p, usage);
             this->size = size;
         }
-        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer(bufferType, 0 );
     }
     
 private:
-    void init(size_t size, GLenum usage, bool mappable){
+    void init(size_t size, GLenum usage, GLenum bufferType, bool mappable){
         GLuint tmp[1];
         glGenBuffers(1,tmp);
         this->buffID = tmp[0];
         this->size=size;
-        glBindBuffer(GL_ARRAY_BUFFER, buffID);
+        glBindBuffer(bufferType, buffID);
         if( mappable ){
-            glBufferStorage( GL_ARRAY_BUFFER, size, nullptr, 
+            glBufferStorage(bufferType, size, nullptr,
                 GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT | 
                 GL_MAP_READ_BIT | GL_MAP_WRITE_BIT );
-            ptr = glMapBufferRange(GL_ARRAY_BUFFER, 
+            ptr = glMapBufferRange(bufferType,
                 0, size, 
                 GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT | 
                 GL_MAP_READ_BIT | GL_MAP_WRITE_BIT 
             );
         } else {
-            glBufferData(GL_ARRAY_BUFFER,size,nullptr,usage);
+            glBufferData(bufferType,size,nullptr,usage);
             this->usage = usage;
             ptr=nullptr;
         }

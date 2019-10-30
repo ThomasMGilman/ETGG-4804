@@ -4,6 +4,7 @@ void draw2()
 
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));
+	Program::setUniform("reflections", globs->allowReflections);		//enables or disables reflections
 	globs->scene.camera.setUniforms();
 	globs->mainProg.use();
 	Program::setUniform("worldMatrix", mat4::identity());
@@ -14,6 +15,41 @@ void draw2()
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);		//Bind SphereBuffer
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);	//Bind TriangleBuffer
 	
+}
+
+void doReflections()
+{
+	//std::cout << "\ndoing reflections\n" << std::endl;
+	uint32_t zero[] = { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0 };
+	for (int i = 0; i < globs->reflectionPasses; i++)
+	{
+		//std::cout << (i == 0) << " FirstPass Index: " << i << std::endl;
+		//std::cout << (i == globs->reflectionPasses - 1) << " LastPass Index: " << i << " numPasses: " << globs->reflectionPasses << std::endl;
+		Program::setUniform("firstPass", (i == 0));
+		Program::setUniform("lastPass", (i == globs->reflectionPasses - 1));
+		Program::updateUniforms();
+
+		globs->rayBufferA->bindBase(GL_SHADER_STORAGE_BUFFER, 2);	//currentRays
+		globs->rayBufferB->bindBase(GL_SHADER_STORAGE_BUFFER, 3);	//nextPassRays
+
+
+		glClearBufferSubData(GL_SHADER_STORAGE_BUFFER,				//Buffer to Clear
+			GL_R32UI,							//internal format of buffer
+			0,									//offset into Buffer to start filling
+			4,									//Size to fill in bytes
+			GL_RED_INTEGER,						//format of data to put
+			GL_UNSIGNED_INT,					//data type
+			zero);								//data to fill in buffer to clear
+
+		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
+		glFinish();
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+
+		rayBuff* rb = (rayBuff*)globs->rayBufferB->ptr;
+		rayBuff* ra = (rayBuff*)globs->rayBufferA->ptr;
+		swap(globs->rayBufferA, globs->rayBufferB);
+	}
 }
 
 
@@ -27,40 +63,10 @@ void draw(){
     Program::updateUniforms();
     globs->fbo->texture->bindImage(0);
 
-	unsigned zero[] = { 0,0,0,0 };
-	for (int i = 0; i < globs->reflectionPasses; i++)
-	{
-		//std::cout << (i == 0) << " FirstPass Index: " << i << std::endl;
-		//std::cout << (i == globs->reflectionPasses - 1) << " LastPass Index: " << i << " numPasses: " << globs->reflectionPasses << std::endl;
-		Program::setUniform("firstPass", (i == 0));
-		Program::setUniform("lastPass", (i == globs->reflectionPasses - 1));
-		Program::updateUniforms();
-		
-		globs->rayBufferA->bindBase(GL_SHADER_STORAGE_BUFFER, 2);	//currentRays
-		globs->rayBufferB->bindBase(GL_SHADER_STORAGE_BUFFER, 3);	//nextPassRays
-		
-
-		glClearBufferSubData(GL_SHADER_STORAGE_BUFFER,				//Buffer to Clear
-								GL_R32UI,							//internal format of buffer
-								0,									//offset into Buffer to start filling
-								4,									//Size to fill
-								GL_RED,								//format of data to put
-								GL_UNSIGNED_INT,					//data type
-								zero);								//data to fill in buffer to clear
-		
+	if (globs->allowReflections)
+		doReflections();
+	else
 		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
-		glMemoryBarrier(GL_ALL_BARRIER_BITS);
-
-		
-		rayBuff* rb = (rayBuff*)globs->rayBufferB->ptr;
-		rayBuff* ra = (rayBuff*)globs->rayBufferA->ptr;
-		rb->rayCount = 5;
-		//rb->rays
-		swap(globs->rayBufferA, globs->rayBufferB);
-	}
-	
-
-    //globs->cs.dispatch(globs->fbo->w/32, globs->fbo->h, 1 );
 
     globs->fbo->texture->unbindImage(0);
     glMemoryBarrier( GL_ALL_BARRIER_BITS );

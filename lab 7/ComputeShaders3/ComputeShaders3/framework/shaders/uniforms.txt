@@ -22,3 +22,4 @@ vec2 numCharCells;
 
 bool firstPass;
 bool lastPass;
+bool reflections;
