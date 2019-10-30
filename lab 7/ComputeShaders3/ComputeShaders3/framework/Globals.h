@@ -75,6 +75,6 @@ class Globals {
     std::set<int> keyset;
 
     bool paused=false, allowReflections = true;
-	unsigned reflectionPasses = 3;
+	unsigned reflectionPasses = 2;
 	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer, rayBufferA, rayBufferB;
 };
