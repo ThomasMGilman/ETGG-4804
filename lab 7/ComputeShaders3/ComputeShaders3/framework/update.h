@@ -16,6 +16,8 @@ void update(int elapsed){
             if( k == SDLK_p )
                 globs->paused = !globs->paused;
             if(k == SDLK_q){
+				globs->rayBufferA.~shared_ptr();	//FreeGLBufferMemory
+				globs->rayBufferB.~shared_ptr();	//FreeGLBufferMemory
                 SDL_Quit();
                 exit(0);
             }

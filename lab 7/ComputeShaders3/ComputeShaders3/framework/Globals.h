@@ -52,10 +52,10 @@ class Globals {
     Sampler linearsampler{false};
     Text text1{ vec2(10,35), ""};
     Text text2{ vec2(10,10), ""};
-    Scene scene{"scene6.txt"};
+    Scene scene{"scene5.txt"};
     std::set<int> keyset;
 
     bool paused=false, allowReflections = true;
-	unsigned reflectionPasses = 2;
+	unsigned reflectionPasses = 5;
 	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer, rayBufferA, rayBufferB;
 };

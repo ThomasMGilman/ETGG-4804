@@ -6,6 +6,7 @@ void draw2()
 	Program::setUniform("lightColor", vec3(1, 1, 1));
 	Program::setUniform("reflections", globs->allowReflections);		//enables or disables reflections
 	globs->scene.camera.setUniforms();
+
 	//globs->mainProg.use();
 	//Program::setUniform("worldMatrix", mat4::identity());
 	//for (auto& M : globs->scene.meshes) {
@@ -42,15 +43,16 @@ void doReflections()
 			zero);								//data to fill in buffer to clear
 
 		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
-		glFinish();
 		glMemoryBarrier(GL_ALL_BARRIER_BITS);
+		glFinish();
 
 
 		rayBuff* rb = (rayBuff*)globs->rayBufferB->ptr;
 		rayBuff* ra = (rayBuff*)globs->rayBufferA->ptr;
 		swap(globs->rayBufferA, globs->rayBufferB);
-		glFinish();
 		glMemoryBarrier(GL_ALL_BARRIER_BITS);
+		glFinish();
+		
 	}
 }
 
@@ -69,6 +71,7 @@ void draw(){
 		doReflections();
 	else
 		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
+		
 
     globs->fbo->texture->unbindImage(0);
     glMemoryBarrier( GL_ALL_BARRIER_BITS );
