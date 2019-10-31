@@ -54,8 +54,11 @@ class Globals {
     Text text2{ vec2(10,10), ""};
     Scene scene{"scene5.txt"};
     std::set<int> keyset;
-
-    bool paused=false, allowReflections = true;
-	unsigned reflectionPasses = 5;
+	
+	bool allowReflections = true;
+	bool paused = false;
+	unsigned reflectionPasses = 2;				//Vars To control Reflections
+	unsigned minReflectionPasses = 2;
+	unsigned maxReflectionPasses = 6;
 	std::shared_ptr<Buffer> sphereBuffer, triangleBuffer, rayBufferA, rayBufferB;
 };
