@@ -13,8 +13,8 @@ void setup(int winwidth, int winheight){
     
     globs->mipsampler.bind(0);
     globs->linearsampler.bind(1);
+	
 	std::vector<GPUSphere> sphereData(globs->scene.spheres.size());
-
 	for (unsigned i = 0; i < globs->scene.spheres.size(); i++)
 	{
 		Sphere* s = &globs->scene.spheres[i];

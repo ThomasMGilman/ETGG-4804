@@ -1,0 +1,21 @@
+
+in vec3 tes_normal;
+in vec3 tes_pw;
+
+out vec4 color;
+
+void main(){
+    if( shadeless != 0.0 ){
+        color = vec4(0,0,0,1);
+        return;
+    }
+    
+    vec3 N = normalize(tes_normal);
+    vec3 L = normalize(lightPosition-tes_pw);
+    float dp = dot(N,L);
+    if( dp<0 )
+        dp=-dp;
+    color.rgb = vec3(dp);
+    color.a = 1.0;
+    return;
+}

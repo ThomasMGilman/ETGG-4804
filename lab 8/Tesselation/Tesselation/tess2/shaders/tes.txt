@@ -1,0 +1,96 @@
+layout(triangles) in;
+
+in vec2 tcs_texCood[];
+in vec3 tcs_position[];
+in vec3 tcs_normal[];
+
+out float tes_shaftPct;
+
+out vec2 tes_texCoord;
+out vec3 tes_worldPos;
+out vec3 tes_normal;
+
+//Wang Hash
+uint hash(uint v){
+	v = 9*( (v >> 16 ) ^ (v ^ 61));
+	v ^= (v>>4);
+	v = v * 668265261;
+	return v ^ (v>>15);
+}
+
+uint state;
+float xorshift(){
+	state = state ^ (state << 13);
+	state = state ^ (state >> 17);
+	state = state ^ (state << 15);
+	return float(state & 0x7fffffff) / float(0x7fffffff);
+}
+
+void xorshiftInit(uint v){
+	state = gl_PrimitiveID ^ (v<<16);
+	state = hash(state);
+}
+
+//Barycentric Interpolation
+vec3 interpolate(float u, float v, float w, vec3 a, vec3 b, vec3 c ){
+	vec3 p0 = u * a;
+	vec3 p1 = v * b;
+	vec3 p2 = w * c;
+	return (p0+p1+p2);
+}
+vec2 interpolate(float u, float v, float w, vec2 a, vec2 b, vec2 c ){
+	vec2 p0 = u * a;
+	vec2 p1 = v * b;
+	vec2 p2 = w * c;
+	return (p0+p1+p2);
+}
+
+
+void main(){
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////Initialize
+	tes_shaftPct = gl_TessCoord[0];
+	uint shaftNumber = uint(gl_TessCoord[1] * gl_TessLevelOuter[0]);
+	xorshiftInit(shaftNumber);
+
+	//ShaftCode
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////generate random barycentric coords
+	//float u = xorshift();
+	//float v = xorshift();
+	//if( u + v > 1.0 ){
+	//	u = 1 - u;
+	//	v = 1 - v;
+	//}
+	//float w = 1.0 - u - v;
+
+	//vec3 basePos = interpolate(u, v, w, tcs_position[0], tcs_position[1], tcs_position[2]);	//get basePosition
+	//vec3 N = interpolate(u, v, w, tcs_normal[0], tcs_normal[1], tcs_normal[2]);				//get Normal
+	//float tShaftAmount = (tes_shaftPct * 2000);
+	//vec3 p1 = basePos + tes_shaftPct * 0.35 * N;				//Set Position
+	//p1 += vec3(0, -.0005, 0) * tShaftAmount * tShaftAmount;		//Add Tesselation ShaftAmount (-.0005 governs bend amount of shaft)
+
+	//TriangleCode
+	vec3 p1 = interpolate(
+		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
+		tcs_position[0], tcs_position[1], tcs_position[2] );
+
+	vec3 N = interpolate(
+		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
+		tcs_normal[0], tcs_normal[1], tcs_normal[2] );
+
+	tes_texCoord = interpolate(
+		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
+		tcs_texCoord[0], tcs_texCoord[1], tcs_texCoord[2] );
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////Set the Position to worldSpace
+	vec4 p = vec4(p1,1.0);
+	p = p * worldMatrix;
+	tes_worldPos = p.xyz;			//Set Texture Position;
+
+	p = p * viewMatrix;
+	p = p * projMatrix;
+	gl_Position = p;				//Set worldPosition
+
+	vec4 n = vec4(N, 0.0);
+	n *= worldMatrix;
+	tes_normal = n.xyz;				//set Normal
+}

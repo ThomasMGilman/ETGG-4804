@@ -15,139 +15,142 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="framework\shaders\cs.txt" />
-    <Text Include="framework\shaders\fs.txt" />
-    <Text Include="framework\shaders\textfs.txt" />
-    <Text Include="framework\shaders\textgs.txt" />
-    <Text Include="framework\shaders\textvs.txt" />
-    <Text Include="framework\shaders\uniforms.txt" />
-    <Text Include="framework\shaders\vs.txt" />
-    <Text Include="framework\consolefont18.txt" />
-    <Text Include="framework\scene1.txt" />
-    <Text Include="framework\scene2.txt" />
-    <Text Include="framework\scene3.txt" />
-    <Text Include="framework\scene5.txt" />
-    <Text Include="framework\scene6.txt" />
-    <Text Include="framework\uniforms.txt" />
+    <Text Include="tess2\shaders\fs.txt" />
+    <Text Include="tess2\shaders\textfs.txt" />
+    <Text Include="tess2\shaders\textgs.txt" />
+    <Text Include="tess2\shaders\textvs.txt" />
+    <Text Include="tess2\shaders\uniforms.txt" />
+    <Text Include="tess2\shaders\vs.txt" />
+    <Text Include="tess2\consolefont18.txt" />
+    <Text Include="tess2\scene1.txt" />
+    <Text Include="tess2\shaders\tcs.txt" />
+    <Text Include="tess2\shaders\tes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework\Buffer.h">
+    <ClInclude Include="tess2\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Camera.h">
+    <ClInclude Include="tess2\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\DataTexture2DArray.h">
+    <ClInclude Include="tess2\DataTexture2DArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\draw.h">
+    <ClInclude Include="tess2\draw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Framebuffer.h">
+    <ClInclude Include="tess2\Framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\glcorearb.h">
+    <ClInclude Include="tess2\glcorearb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\glfuncs.h">
+    <ClInclude Include="tess2\glfuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Globals.h">
+    <ClInclude Include="tess2\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Image.h">
+    <ClInclude Include="tess2\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\ImageTexture2DArray.h">
+    <ClInclude Include="tess2\ImageTexture2DArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\ImageTextureCube.h">
+    <ClInclude Include="tess2\ImageTextureCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\math3d.h">
+    <ClInclude Include="tess2\math3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Mesh.h">
+    <ClInclude Include="tess2\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\miniz_common.h">
+    <ClInclude Include="tess2\miniz_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\miniz_tinfl.h">
+    <ClInclude Include="tess2\miniz_tinfl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Program.h">
+    <ClInclude Include="tess2\Program.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Sampler.h">
+    <ClInclude Include="tess2\Sampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Scene.h">
+    <ClInclude Include="tess2\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\setup.h">
+    <ClInclude Include="tess2\setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Sphere.h">
+    <ClInclude Include="tess2\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Text.h">
+    <ClInclude Include="tess2\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Texture.h">
+    <ClInclude Include="tess2\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Texture2DArray.h">
+    <ClInclude Include="tess2\Texture2DArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\TextureCube.h">
+    <ClInclude Include="tess2\TextureCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\traceRay.h">
+    <ClInclude Include="tess2\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\Triangle.h">
+    <ClInclude Include="tess2\UnitSquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\UnitSquare.h">
+    <ClInclude Include="tess2\update.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\update.h">
+    <ClInclude Include="tess2\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\utils.h">
+    <ClInclude Include="tess2\winsetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\winsetup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\Zip.h">
+    <ClInclude Include="tess2\Zip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="framework\consolefont14.png">
+    <Font Include="tess2\consolefont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="tess2\glfuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tess2\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tess2\miniz_tinfl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tess2\statics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="tess2\grey.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="framework\consolefont18.png">
+    <Image Include="tess2\heightmap.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tess2\consolefont14.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tess2\consolefont18.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="framework\glfuncs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\miniz_tinfl.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\statics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="framework\Makefile" />
+    <None Include="tess2\mkscene.py" />
+    <None Include="tess2\fontsheet.html" />
   </ItemGroup>
 </Project>

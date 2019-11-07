@@ -1,21 +1,28 @@
+void debugDrawMeshs()
+{
+	globs->mainProg.use();
+	Program::setUniform("worldMatrix", mat4::identity());
+	for (auto& M : globs->scene.meshes) {
+		M.draw(GL_PATCHES);
+	}
+}
+
 void draw2()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	Program::setUniform("lightPosition", globs->scene.lightPosition);
 	Program::setUniform("lightColor", vec3(1, 1, 1));
 	Program::setUniform("reflections", globs->allowReflections);		//enables or disables reflections
+	Program::setUniform("subdivs", globs->subdivs);
+	Program::setUniform("shadeless", float(globs->wireframe));
+	Program::setUniform("worldMatrix", mat4::identity());
 	globs->scene.camera.setUniforms();
 
-	//globs->mainProg.use();
-	//Program::setUniform("worldMatrix", mat4::identity());
-	//for (auto& M : globs->scene.meshes) {
-		//M.draw();
-	//}
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glPolygonMode(GL_FRONT_AND_BACK, globs->wireframe ? GL_LINE : GL_FILL);
+	
 
 	globs->sphereBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 0);		//Bind SphereBuffer
 	globs->triangleBuffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);	//Bind TriangleBuffer
-	
 }
 
 void doReflections()
@@ -67,12 +74,13 @@ void draw(){
     Program::updateUniforms();
     globs->fbo->texture->bindImage(0);
 
-	if (globs->allowReflections)
-		doReflections();
-	else
-		globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
-		
+	//if (globs->allowReflections)
+	//	doReflections();
+	//else
+	//	globs->cs.dispatch(globs->fbo->w / 32, globs->fbo->h, 1);
 
+	debugDrawMeshs();
+		
     globs->fbo->texture->unbindImage(0);
     glMemoryBarrier( GL_ALL_BARRIER_BITS );
 
@@ -84,4 +92,12 @@ void draw(){
                       GL_COLOR_BUFFER_BIT,
                       GL_NEAREST );
     glBindFramebuffer( GL_READ_FRAMEBUFFER, 0 );
+
+	globs->text1.draw();
+	globs->text2.draw();
+	globs->text3.draw();
+	globs->text4.draw();
+	globs->text5.draw();
+	globs->text6.draw();
+	globs->text7.draw();
 }

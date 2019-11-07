@@ -55,8 +55,7 @@ int main(int argc, char* argv[]){
             accumElapsedUsec -= UPDATE_QUANTUM_USEC;
         }
         draw();
-        globs->text1.draw();
-        globs->text2.draw();
+        
         ++numFrames;
         SDL_GL_SwapWindow(win);
         auto endTicks = SDL_GetPerformanceCounter();

@@ -20,6 +20,12 @@ vec2 textOrigin;
 vec2 charCellSize;
 vec2 numCharCells;
 
+//For Reflections
 bool firstPass;
 bool lastPass;
 bool reflections;
+
+//For WireMeshes and Tesselation
+float subdivs;
+float shadeless;
+float tessFactor;

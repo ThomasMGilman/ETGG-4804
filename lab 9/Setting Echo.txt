@@ -1,0 +1,6 @@
+1: Load Wav into Array
+2: allocate 2nd wave output allZeros
+
+3: take 16 byte chunck from inArray at pos P call it D
+4: Echo = D*decay
+5: inArray[P+delay] += Echo
