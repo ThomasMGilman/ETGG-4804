@@ -67,5 +67,27 @@ class Scene {
             }
         }
     }
+
+	void walkCamera(float amt)
+	{
+		this->camera.walk(amt);
+		//this->updateLightPos();
+	}
+
+	void strafeCamera(float dr, float du, float dl)
+	{
+		this->camera.strafe(dr, du, dl);
+		//this->updateLightPos();
+	}
+
+	void updateLightPos()
+	{
+		lightPosition = this->camera.eye;
+	}
+
+	void tiltCamera(float amt)
+	{
+		this->camera.tilt(amt);
+	}
 };
 

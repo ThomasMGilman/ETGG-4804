@@ -88,12 +88,11 @@ class Camera{
         this->updateViewMatrix();
     }
 
-    void strafeAligned(float dr, float du, float dl){
-        auto delta = dr * vec3(1,0,0) + du * vec3(0,1,0) + dl * vec3(0,0,1);
-        this->eye = this->eye + delta;
-        this->updateViewMatrix();
-    }
-
+	void strafeAligned(float dr, float du, float dl) {
+		auto delta = dr * vec3(1, 0, 0) + du * vec3(0, 1, 0) + dl * vec3(0, 0, 1);
+		this->eye = this->eye + delta;
+		this->updateViewMatrix();
+	}
 };
 
         

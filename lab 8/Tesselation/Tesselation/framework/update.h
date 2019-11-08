@@ -69,12 +69,7 @@ void update(int elapsed){
 	if (keyInKeyset(SDLK_LCTRL))
 		globs->scene.strafeCamera(0, -walkAmt * elapsed, 0);
         
-	
-	//Camera Tilt
-	if (keyInKeyset(SDLK_i) || keyInKeyset(SDLK_UP))
-		globs->scene.tiltCamera(turnAmt * elapsed);
-	if (keyInKeyset(SDLK_k) || keyInKeyset(SDLK_DOWN))
-		globs->scene.tiltCamera(-turnAmt * elapsed);
+
 	//Camera Rotation
 	if (keyInKeyset(SDLK_j) || keyInKeyset(SDLK_LEFT))
 		globs->scene.camera.turn(turnAmt * elapsed);

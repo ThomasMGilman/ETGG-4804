@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="tess2\shaders\fs.txt" />
+    <Text Include="tess2\shaders\tcs.txt" />
+    <Text Include="tess2\shaders\tes.txt" />
     <Text Include="tess2\shaders\textfs.txt" />
     <Text Include="tess2\shaders\textgs.txt" />
     <Text Include="tess2\shaders\textvs.txt" />
@@ -23,8 +25,6 @@
     <Text Include="tess2\shaders\vs.txt" />
     <Text Include="tess2\consolefont18.txt" />
     <Text Include="tess2\scene1.txt" />
-    <Text Include="tess2\shaders\tcs.txt" />
-    <Text Include="tess2\shaders\tes.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tess2\Buffer.h">
@@ -117,9 +117,16 @@
     <ClInclude Include="tess2\Zip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tess2\PatchMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="tess2\consolefont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tess2\fontsheet.html" />
+    <None Include="tess2\mkscene.py" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tess2\glfuncs.cpp">
@@ -134,23 +141,5 @@
     <ClCompile Include="tess2\statics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="tess2\grey.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="tess2\heightmap.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="tess2\consolefont14.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="tess2\consolefont18.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="tess2\mkscene.py" />
-    <None Include="tess2\fontsheet.html" />
   </ItemGroup>
 </Project>

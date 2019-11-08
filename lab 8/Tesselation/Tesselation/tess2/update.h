@@ -1,4 +1,8 @@
-
+template<typename T>
+bool keyInKeyset(T key)
+{
+	return globs->keyset.find(key) != globs->keyset.end();
+}
 
 void update(int elapsed){
     SDL_Event ev;
@@ -19,6 +23,19 @@ void update(int elapsed){
                 SDL_Quit();
                 exit(0);
             }
+			if (k == SDLK_F1 || k == SDLK_F2) {
+				globs->subdivs += (k == SDLK_F1 ? 1 : -1) * 0.25;
+				std::ostringstream oss;
+				oss << "Tess level: " << globs->subdivs;
+				globs->text5.setText(oss.str());
+			}
+			if (k == SDLK_F3) {
+				globs->wireframe = !globs->wireframe;
+				if (globs->wireframe)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				else
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
         }
         else if( ev.type == SDL_KEYUP ){
             auto k = ev.key.keysym.sym;
@@ -41,27 +58,35 @@ void update(int elapsed){
     const float turnAmt = 0.0007f;
     const float walkAmt = 0.005f;
     
-    if( globs->keyset.find(SDLK_w) != globs->keyset.end() )
-        globs->scene.camera.walk(walkAmt*elapsed);
-    if( globs->keyset.find(SDLK_s) != globs->keyset.end() )
-        globs->scene.camera.walk(-walkAmt*elapsed);
-    if( globs->keyset.find(SDLK_a) != globs->keyset.end() )
-        globs->scene.camera.turn(turnAmt*elapsed);
-    if( globs->keyset.find(SDLK_d) != globs->keyset.end() )
-        globs->scene.camera.turn(-turnAmt*elapsed);
-    if( globs->keyset.find(SDLK_i) != globs->keyset.end() )
-        globs->scene.camera.strafe(0,walkAmt*elapsed,0);
-    if( globs->keyset.find(SDLK_k) != globs->keyset.end() )
-        globs->scene.camera.strafe(0,-walkAmt*elapsed,0);
-    if( globs->keyset.find(SDLK_j) != globs->keyset.end() )
-        globs->scene.camera.strafe(-walkAmt*elapsed,0,0);
-    if( globs->keyset.find(SDLK_l) != globs->keyset.end() )
-        globs->scene.camera.strafe(walkAmt*elapsed,0,0);
-    if( globs->keyset.find(SDLK_e) != globs->keyset.end() )
-        globs->scene.camera.tilt(turnAmt*elapsed);
-    if( globs->keyset.find(SDLK_r) != globs->keyset.end() )
-        globs->scene.camera.tilt(-turnAmt*elapsed);
+	//Camera Movement
+	if (keyInKeyset(SDLK_w))
+		globs->scene.walkCamera(walkAmt * elapsed);
+	if (keyInKeyset(SDLK_s))
+		globs->scene.walkCamera(-walkAmt * elapsed);
+
+	//Camera Strafing
+    if (keyInKeyset(SDLK_a))
+		globs->scene.strafeCamera(-walkAmt * elapsed, 0, 0);
+    if (keyInKeyset(SDLK_d))
+		globs->scene.strafeCamera(walkAmt * elapsed, 0, 0);
+	if (keyInKeyset(SDLK_SPACE))
+		globs->scene.strafeCamera(0, walkAmt * elapsed, 0);
+	if (keyInKeyset(SDLK_LCTRL))
+		globs->scene.strafeCamera(0, -walkAmt * elapsed, 0);
         
+
+	//Camera Rotation
+	if (keyInKeyset(SDLK_j) || keyInKeyset(SDLK_LEFT))
+		globs->scene.camera.turn(turnAmt * elapsed);
+	if (keyInKeyset(SDLK_l) || keyInKeyset(SDLK_RIGHT))
+		globs->scene.camera.turn(-turnAmt * elapsed);
+
+	//Camera Tilt
+	if (keyInKeyset(SDLK_e))
+		globs->scene.tiltCamera(turnAmt * elapsed);
+	if (keyInKeyset(SDLK_r))
+		globs->scene.tiltCamera(-turnAmt * elapsed);
+
 }
 
   

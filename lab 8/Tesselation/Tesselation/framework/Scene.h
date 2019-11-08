@@ -80,11 +80,6 @@ class Scene {
 		//this->updateLightPos();
 	}
 
-	void tiltCamera(float amt)
-	{
-		this->camera.tilt(amt);
-	}
-
 	void updateLightPos()
 	{
 		lightPosition = this->camera.eye;

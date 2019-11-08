@@ -1,0 +1,105 @@
+﻿  glfuncs.cpp
+  main.cpp
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(79,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(89,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(111,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(126,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Triangle.h(23,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(47,1): warning C4056: overflow in floating-point constant arithmetic
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(48,1): warning C4056: overflow in floating-point constant arithmetic
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(136,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Text.h(42,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Text.h(43,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Framebuffer.h(60,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,47): warning C4244:         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,47): warning C4244:         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,47): warning C4244:             T=float
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,47): warning C4244:         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,44): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,44): warning C4244:         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,44): warning C4244:         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,44): warning C4244:             T=float
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\main.cpp(31,44): warning C4244:         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(254,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message : see reference to function template instantiation 'void Program::getLog<void(GLuint,GLsizei,GLsizei *,GLchar *)>(std::string,T (__cdecl &),GLuint)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :             T=void (GLuint,GLsizei,GLsizei *,GLchar *)
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Image.h(61,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message : see reference to function template instantiation 'Image::Image<uint8_t>(const std::vector<uint8_t,std::allocator<_Ty>> &)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :             _Ty=uint8_t
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(28,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message : see reference to function template instantiation 'std::shared_ptr<Buffer> Buffer::create<vec3>(const std::vector<vec3,std::allocator<_Ty>> &,GLenum)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :             _Ty=vec3
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:             T=float
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510): message : while compiling class template member function 'vec3Base<float> vec3Base<float>::operator *(double) const'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(742): message : see reference to function template instantiation 'vec3Base<float> vec3Base<float>::operator *(double) const' being compiled
+  statics.cpp
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(790): message : see reference to class template instantiation 'vec3Base<float>' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(79,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(89,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(111,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(126,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Triangle.h(23,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(47,1): warning C4056: overflow in floating-point constant arithmetic
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(48,1): warning C4056: overflow in floating-point constant arithmetic
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(136,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Text.h(42,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Text.h(43,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Framebuffer.h(60,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Image.h(61,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message : see reference to function template instantiation 'Image::Image<uint8_t>(const std::vector<uint8_t,std::allocator<_Ty>> &)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :             _Ty=uint8_t
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\ImageTexture2DArray.h(49): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(254,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message : see reference to function template instantiation 'void Program::getLog<void(GLuint,GLsizei,GLsizei *,GLchar *)>(std::string,T (__cdecl &),GLuint)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :             T=void (GLuint,GLsizei,GLsizei *,GLchar *)
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Program.h(50): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Buffer.h(28,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message : see reference to function template instantiation 'std::shared_ptr<Buffer> Buffer::create<vec3>(const std::vector<vec3,std::allocator<_Ty>> &,GLenum)' being compiled
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :             _Ty=vec3
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\Mesh.h(138): message :         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         with
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         [
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:             T=float
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510,1): warning C4244:         ]
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(510): message : while compiling class template member function 'vec3Base<float> vec3Base<float>::operator *(double) const'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(742): message : see reference to function template instantiation 'vec3Base<float> vec3Base<float>::operator *(double) const' being compiled
+  Generating Code...
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\tess2\math3d.h(790): message : see reference to class template instantiation 'vec3Base<float>' being compiled
+  miniz_tinfl.c
+main.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SetAttribute referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_CreateContext referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_GetDrawableSize referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SetSwapInterval referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GL_SwapWindow referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "void __cdecl update(int)" (?update@@YAXH@Z)
+main.obj : error LNK2019: unresolved external symbol SDL_GetPerformanceCounter referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_GetPerformanceFrequency referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_Delay referenced in function SDL_main
+main.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "struct SDL_Window * __cdecl winsetup(void)" (?winsetup@@YAPEAUSDL_Window@@XZ)
+main.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "void __cdecl update(int)" (?update@@YAXH@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\\SDL2-2.0.10\lib\x86\SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\Tesselation\\SDL2-2.0.10\lib\x86\SDL2main.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 8\Tesselation\x64\Debug\Tesselation.exe : fatal error LNK1120: 13 unresolved externals

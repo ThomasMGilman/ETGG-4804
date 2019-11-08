@@ -132,10 +132,10 @@ public:
         this->vao = vao;
     }
     
-    void draw(GLenum mode = GL_TRIANGLES){
+    void draw(){
         glBindVertexArray(this->vao);
         Program::setUniform("meshColor",this->color);
         Program::updateUniforms();
-        glDrawArrays( mode, 0, numverts );
+        glDrawArrays( GL_TRIANGLES, 0, numverts );
     }
 };

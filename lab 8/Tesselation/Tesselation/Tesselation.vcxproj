@@ -46,6 +46,7 @@
     <ClInclude Include="tess2\Mesh.h" />
     <ClInclude Include="tess2\miniz_common.h" />
     <ClInclude Include="tess2\miniz_tinfl.h" />
+    <ClInclude Include="tess2\PatchMesh.h" />
     <ClInclude Include="tess2\Program.h" />
     <ClInclude Include="tess2\Sampler.h" />
     <ClInclude Include="tess2\Scene.h" />
@@ -66,20 +67,14 @@
     <Font Include="tess2\consolefont.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="tess2\fontsheet.html" />
+    <None Include="tess2\mkscene.py" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="tess2\glfuncs.cpp" />
     <ClCompile Include="tess2\main.cpp" />
     <ClCompile Include="tess2\miniz_tinfl.c" />
     <ClCompile Include="tess2\statics.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="tess2\consolefont14.png" />
-    <Image Include="tess2\consolefont18.png" />
-    <Image Include="tess2\grey.png" />
-    <Image Include="tess2\heightmap.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="tess2\fontsheet.html" />
-    <None Include="tess2\mkscene.py" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -153,9 +148,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\SDL2-2.0.10\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
