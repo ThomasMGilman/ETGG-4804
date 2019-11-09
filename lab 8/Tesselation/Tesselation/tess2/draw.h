@@ -9,7 +9,6 @@ void draw(){
 
     Program::setUniform("lightPosition",  globs->scene.lightPosition);
     Program::setUniform("lightColor", vec3(1,1,1));
-	Program::setUniform("tessFactor", 1);
 	Program::setUniform("subdivs", globs->subdivs);
 	Program::setUniform("shadeless", float(globs->wireframe));
 	globs->scene.camera.setUniforms();
@@ -17,19 +16,11 @@ void draw(){
 	Program::setUniform("worldMatrix", mat4::identity());
 	Program::updateUniforms();
     
-    //globs->mainProg.use();
-	globs->tessProg.use();
-	globs->pmesh.drawPatches();
-
+	globs->mainProg.use();
     globs->heightmap.bind(1);
     for(auto& M : globs->scene.meshes ){
 		M.draw(GL_PATCHES, globs->verticesPerPatch);
     }
-
-	//globs->tessProg.use();
-	//for (auto& M : globs->scene.meshes) {
-	//	M.draw(GL_PATCHES, globs->verticesPerPatch);
-	//}
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	globs->text1.draw();
@@ -37,5 +28,6 @@ void draw(){
 	globs->text3.draw();
 	globs->text4.draw();
 	globs->text5.draw();
+	globs->text6.draw();
 }
 

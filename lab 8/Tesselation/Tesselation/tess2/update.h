@@ -27,7 +27,7 @@ void update(int elapsed){
 				globs->subdivs += (k == SDLK_F1 ? 1 : -1) * 0.25;
 				std::ostringstream oss;
 				oss << "Tess level: " << globs->subdivs;
-				globs->text5.setText(oss.str());
+				globs->text6.setText(oss.str());
 			}
 			if (k == SDLK_F3) {
 				globs->wireframe = !globs->wireframe;
@@ -75,16 +75,16 @@ void update(int elapsed){
 		globs->scene.strafeCamera(0, -walkAmt * elapsed, 0);
         
 
-	//Camera Rotation
+	//Camera Turn
 	if (keyInKeyset(SDLK_j) || keyInKeyset(SDLK_LEFT))
 		globs->scene.camera.turn(turnAmt * elapsed);
 	if (keyInKeyset(SDLK_l) || keyInKeyset(SDLK_RIGHT))
 		globs->scene.camera.turn(-turnAmt * elapsed);
 
 	//Camera Tilt
-	if (keyInKeyset(SDLK_e))
+	if (keyInKeyset(SDLK_i) || keyInKeyset(SDLK_UP))
 		globs->scene.tiltCamera(turnAmt * elapsed);
-	if (keyInKeyset(SDLK_r))
+	if (keyInKeyset(SDLK_k) || keyInKeyset(SDLK_DOWN))
 		globs->scene.tiltCamera(-turnAmt * elapsed);
 
 }

@@ -19,6 +19,6 @@ vec2 textOrigin;
 vec2 charCellSize;
 vec2 numCharCells;
 
-int tessFactor;
+//Tesselation variables
 float subdivs;
 float shadeless;

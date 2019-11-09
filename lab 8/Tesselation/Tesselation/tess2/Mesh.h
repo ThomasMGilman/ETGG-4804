@@ -160,19 +160,16 @@ public:
 		this->vao = vao;
 	}
 
-	void draw() {
-		tex->bind(0);
-		glBindVertexArray(this->vao);
-		Program::updateUniforms();
-		glDrawArrays(GL_TRIANGLES, 0, numverts);
-	}
-
-	void draw(GLenum drawType = GL_TRIANGLES, int multiplier = 1) {
+	void draw(GLenum drawType = GL_TRIANGLES, int verticesPerPatch = 1) {
 		tex->bind(0);
 		glBindVertexArray(this->vao);
 		Program::updateUniforms();
 		if (drawType == GL_PATCHES)
-			glPatchParameteri(GL_PATCH_VERTICES, multiplier);
-		glDrawArrays(drawType, 0, numverts * multiplier);
+		{
+			glPatchParameteri(GL_PATCH_VERTICES, verticesPerPatch);
+			glDrawArrays(drawType, 0, numPatches * verticesPerPatch);
+		}
+		else
+			glDrawArrays(drawType, 0, numverts);
 	}
 };
