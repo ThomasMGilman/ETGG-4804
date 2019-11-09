@@ -2,7 +2,6 @@
 
 #include "utils.h"
 #include "Mesh.h"
-#include "PatchMesh.h"
 #include "Text.h"
 #include "Framebuffer.h"
 #include "UnitSquare.h" 
@@ -26,8 +25,6 @@ class Globals {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////Scene to Draw
     Scene scene{"scene1.txt"};
-
-	PatchMesh pmesh{ "goblet.obj.mesh" };
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////Global Variables
     std::set<int> keyset;
