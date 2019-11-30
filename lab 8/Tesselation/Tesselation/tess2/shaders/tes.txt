@@ -41,17 +41,21 @@ vec3 project( vec3 v, vec3 n, vec3 p ){
 	return p - pdistance * n;
 }
 
-layout(triangles, fractional_odd_spacing) in;
+layout(triangles) in;
+layout(binding=1) uniform sampler2DArray heightmap;
 
 in vec3 tcs_position[];
 in vec3 tcs_normal[];
 in vec2 tcs_texCoord[];
 
-out vec3 tes_worldPos;
-out vec2 tes_texCoord;
+out vec3 tes_position;
 out vec3 tes_normal;
+out vec2 tes_texCoord;
 
 void main(){
+	//gl_TessCoord[0...2] will have the u,v,w barycentric coordinates
+	//need to interpolate all three items (position, normal, texture coordinates)
+
 	vec3 p1 = interpolate(
 		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
 		tcs_position[0], tcs_position[1], tcs_position[2] );
@@ -59,15 +63,10 @@ void main(){
 	vec3 pr1 = project( tcs_position[0], tcs_normal[0], p1 );
 	vec3 pr2 = project( tcs_position[1], tcs_normal[1], p1 );
 	vec3 pr3 = project( tcs_position[2], tcs_normal[2], p1 );
-	vec3 p1a = interpolate(
-		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
-		pr1,pr2,pr3 );
-
+	vec3 p1a = interpolate(gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2], pr1, pr2, pr3 );
 	float alpha = 0.75;
-	p1 = (1.0-alpha) * p1 + alpha * p1a;
+	p1 = (1.0 - alpha) * p1 + alpha * p1a;
 
-	p1 = normalize(p1);
-	//vec3 n1 = p1;
 	vec3 n1 = interpolate(
 		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
 		tcs_normal[0], tcs_normal[1], tcs_normal[2] );
@@ -76,13 +75,18 @@ void main(){
 		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
 		tcs_texCoord[0], tcs_texCoord[1], tcs_texCoord[2] );
 
-	vec4 p = vec4(p1,1.0);
+	vec4 p = vec4(p1, 1.0);
 	p = p * worldMatrix;
-	tes_worldPos = p.xyz;
+	tes_position = p.xyz;
+
+	vec3 texcolor = texture(heightmap, vec3( tes_texCoord, 0.0 ) ).rgb * n1;
+	if(subdivs > 1)
+		p.y += (texcolor.x + texcolor.y + texcolor.z);
+
 	p = p * viewMatrix;
 	p = p * projMatrix;
 	gl_Position = p;
-	vec4 n = vec4(n1,0.0);
-	n = n * worldMatrix;
+
+	vec4 n = vec4(n1, 0.0) * worldMatrix;
 	tes_normal = n.xyz;
 }
