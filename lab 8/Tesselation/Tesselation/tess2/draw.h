@@ -17,7 +17,7 @@ void draw(){
 	Program::updateUniforms();
     
 	globs->mainProg.use();
-    globs->heightmap.bind(1);
+    globs->heightmap.bind(1);							//bind texture
     for(auto& M : globs->scene.meshes ){
 		M.draw(GL_PATCHES, globs->verticesPerPatch);
     }

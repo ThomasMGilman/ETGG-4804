@@ -19,7 +19,7 @@ void xorshiftInit(uint v){
 	state = hash(state);
 }
 
-//Barycentric Interpolation
+//simple barycentric interpolation
 vec3 interpolate(float u, float v, float w, vec3 a, vec3 b, vec3 c ){
 	vec3 p0 = u * a;
 	vec3 p1 = v * b;
@@ -41,7 +41,7 @@ vec3 project( vec3 v, vec3 n, vec3 p ){
 	return p - pdistance * n;
 }
 
-layout(triangles, fractional_odd_spacing) in;
+layout(triangles) in;
 
 in vec3 tcs_position[];
 in vec3 tcs_normal[];
@@ -64,10 +64,9 @@ void main(){
 		pr1,pr2,pr3 );
 
 	float alpha = 0.75;
-	p1 = (1.0-alpha) * p1 + alpha * p1a;
-
+	//p1 = (1.0-alpha) * p1 + alpha * p1a;
 	p1 = normalize(p1);
-	//vec3 n1 = p1;
+
 	vec3 n1 = interpolate(
 		gl_TessCoord[0], gl_TessCoord[1], gl_TessCoord[2],
 		tcs_normal[0], tcs_normal[1], tcs_normal[2] );
@@ -78,10 +77,12 @@ void main(){
 
 	vec4 p = vec4(p1,1.0);
 	p = p * worldMatrix;
+
 	tes_worldPos = p.xyz;
 	p = p * viewMatrix;
 	p = p * projMatrix;
 	gl_Position = p;
+
 	vec4 n = vec4(n1,0.0);
 	n = n * worldMatrix;
 	tes_normal = n.xyz;

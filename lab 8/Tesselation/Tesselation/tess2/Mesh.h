@@ -167,7 +167,7 @@ public:
 		if (drawType == GL_PATCHES)
 		{
 			glPatchParameteri(GL_PATCH_VERTICES, verticesPerPatch);
-			glDrawArrays(drawType, 0, numPatches * verticesPerPatch);
+			glDrawArrays(drawType, 0, numPatches* verticesPerPatch);
 		}
 		else
 			glDrawArrays(drawType, 0, numverts);

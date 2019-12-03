@@ -1,0 +1,21 @@
+UnOptimal way:
+	1: Pack/ unpack/ twidle chunky pixel -> bit plane
+	2: for red plane: cmplt(Reds,{targetVal}), do the same for blue and green
+		rP = cmplt(Reds,{redTargetVal})
+		gP = cmplt(Greens,{greenTargetVal})
+		bP = cmplt(Blues,{blueTargetVal})
+		matchingPlanes = rp & gP & bP
+		
+	3: do same unpacking for cgi plane -> bit plane
+		maskRed = CGIr & matchingPlanes
+		maskGreen = CGIg & matchingPlanes
+		maskBlue = CGIb & matchingPlanes
+		
+		notMaskRed = not(CGIr & matchingPlanes)
+		notMaskGreen = not(CGIg & matchingPlanes)
+		notMaskBlue = not(CGIb & matchingPlanes)
+		
+	unshuffle masks and store image
+		
+Optimal way?:
+	

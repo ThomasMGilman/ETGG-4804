@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="tess2\consolefont18.txt" />
     <Text Include="tess2\scene1.txt" />
     <Text Include="tess2\shaders\fs.txt" />
     <Text Include="tess2\shaders\tcs.txt" />
@@ -62,9 +61,6 @@
     <ClInclude Include="tess2\utils.h" />
     <ClInclude Include="tess2\winsetup.h" />
     <ClInclude Include="tess2\Zip.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="tess2\consolefont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="tess2\fontsheet.html" />

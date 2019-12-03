@@ -7,6 +7,10 @@ out vec3 v_normal;
 out vec3 v_position;
 
 void main(){
+	//v_position = position;
+	//v_normal = normal;
+	//v_texCoord = texCoord;
+
 	vec4 p = vec4(position, 1.0) * worldMatrix;
 	v_position = p.xyz;
 
