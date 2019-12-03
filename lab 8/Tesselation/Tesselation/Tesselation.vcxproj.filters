@@ -74,6 +74,9 @@
     <ClInclude Include="tess2\PatchMesh.h">
       <Filter>Resource Files\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tess2\PatchMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="tess2\Program.h">
       <Filter>Resource Files\Header Files</Filter>
     </ClInclude>
@@ -117,7 +120,11 @@
       <Filter>Resource Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tess2\Zip.h">
+<<<<<<< HEAD
       <Filter>Resource Files\Header Files</Filter>
+=======
+      <Filter>Header Files</Filter>
+>>>>>>> 6a08d2e101f423436b3a7b1afddbfbce69fc8d6b
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
