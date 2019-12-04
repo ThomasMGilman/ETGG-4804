@@ -5,11 +5,6 @@
 
 using namespace std;
 
-struct alignas(16) XMMFloatPack 
-{
-	float v[4];
-};
-
 int main(int argc, char* argv[])
 {
     string filename = argv[1];
@@ -19,7 +14,7 @@ int main(int argc, char* argv[])
 
 	__m128 factorX = _mm_load1_ps(&echo_decay);		//Load single 32bit float from mem into all elements of factorX
 
-	alignas(16) float echo_delay = atof(argv[3]);
+	alignas(16) float echo_delay = atof(argv[3]);	//in seconds
     Wave w(filename);
     if( w.format.format != Wave::FormatCode::FLOAT ){
         cout << "Not a float wave\n";
@@ -30,18 +25,16 @@ int main(int argc, char* argv[])
     unsigned totalFloats = w.numFrames * w.format.bytesPerFrame / 4;
     unsigned totalXMMs = totalFloats / 4;
     float* f = (float*) w.data();
-	XMMFloatPack *clip = new XMMFloatPack();
-    for(unsigned i=0;i<totalXMMs;i++){
-		__m128 tmp = _mm_load_ps(f);				//load clip
-		if (i > 0)
-		{
-			__m128 tmp2 = _mm_load_ps((float*)clip);
-			tmp = _mm_add_ps(tmp, tmp2);
-		}
-		tmp = _mm_mul_ps(tmp, factorX);		//add decay to clip
-		_mm_store_ps((float*)clip, tmp);	//store clip for next use after decay added
 
-        _mm_store_ps(f,tmp);				//store decayed clip back into Wave
+	unsigned delayOffset = totalFloats * echo_delay;
+	//cout << "delayOffset: " << delayOffset << " delaySeconds: " << echo_delay <<"\nNumFrames: " << w.numFrames << " totalFloats: " << totalFloats << endl;
+    for(unsigned i=0;i<totalXMMs;i++){
+		__m128 tmp = _mm_load_ps(f);				//load clip of 4 floats
+		if (i*4 + delayOffset < totalFloats - 4)
+			_mm_store_ps(f + delayOffset, 
+				_mm_add_ps(_mm_mul_ps(tmp, factorX), _mm_load_ps(f + delayOffset))); //store decayed clip back into Wave at specified location
+
+		_mm_store_ps(f, tmp);
         f += 4;								//move ahead 4 floats
     }
     swatch.stop();

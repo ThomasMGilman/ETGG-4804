@@ -1,6 +1,6 @@
 ﻿  loudnessxmm.cpp
 D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\Wave.h(93,24): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(17,34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(22,31): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(33,41): warning C4316: 'XMMFloatPack': object allocated on the heap may not be aligned 16
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(12,34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(17,31): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(29,23): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
   SSE 1.vcxproj -> D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 9\SSE 1\Debug\SSE 1.exe
