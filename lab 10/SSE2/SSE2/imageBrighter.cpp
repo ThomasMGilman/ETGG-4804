@@ -1,4 +1,5 @@
 #include "Image.h"
+#include "Stopwatch.h"
 #include <intrin.h>
 #include <stdlib.h>
 #include <string>
@@ -9,27 +10,31 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	string fname = argv[1];
-	int deltaI = atoi(argv[2]);
-	Image img(fname);
+	int brightnessVal = atoi(argv[2]);
+	alignas(4) int deltaI[4];
 
+
+	//every 4th element should be a 0 so alpha doesnt get changed
+	for (uint8_t i = 0; i < 16; i++)
+		deltaI[i] = (i + 1) % 4 != 0 ? brightnessVal : 0;
+	__m128i brightnessOffset = _mm_load_si128((__m128i*)deltaI);
+	
 	//number of bytes to process. bytesPerPixel might be 
 	//3 (RGB) or 4 (RGBA)
-	unsigned num = img.width() * img.height() * img.bytesPerPixel();//NumPixels on image
-	uint8_t* p = img.pixels();										//points at each RGBA pixel
+	Image img(fname);
+	unsigned num = img.width() * img.height() * img.bytesPerPixel();				//NumPixels on image
+	uint8_t* p = img.pixels();														//points at each RGBA pixel
 
+	Stopwatch swatch;
+	swatch.start();
 	for (unsigned i = 0; i < num; i += img.bytesPerPixel()) {
-		//make sure we don't change alpha channel, if there is one...
-		for (int j = 0; j < 3; ++j) {
-			//do 3 times: R,G,B. Skip A.
-			int tmp = p[i + j];
-			tmp += deltaI;
-			if (tmp > 255)
-				tmp = 255;
-			if (tmp < 0)
-				tmp = 0;
-			p[i + j] = uint8_t(tmp);
-		}
+		__m128i RGBA = _mm_add_epi8(_mm_load_si128((__m128i*)p), brightnessOffset); //add signed brightnessOffset to val
+		_mm_store_si128((__m128i*)p, RGBA);
+		p += img.bytesPerPixel();
 	}
+	swatch.stop();
+	cout << swatch.elapsed_us() << "usec\n";
+
 	img.writePng("out.png");
 	return 0;
 }
