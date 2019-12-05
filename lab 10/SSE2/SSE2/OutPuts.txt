@@ -1,0 +1,32 @@
+ReleaseMode:
+atc203.png 200:
+	SIMD:		16usec
+	non_SIMD:	243usec
+	
+atc204.png 100:
+	SIMD:		46usec
+	non_SIMD:	729usec
+	
+bluesky.png 100:
+	SIMD:		39usec
+	non_SIMD:	616usec
+	
+flower1.png 100:
+	SIMD:		47usec
+	non_SIMD:	707usec
+	
+flower2.png 100:
+	SIMD:		45usec
+	non_SIMD:	710usec
+	
+ice.png 100:
+	SIMD:		51usec
+	non_SIMD:	746usec
+	
+moon.png 100:
+	SIMD:		50usec
+	non_SIMD:	717usec
+	
+yellowflower.png 100:
+	SIMD:		45usec
+	non_SIMD:	1116usec

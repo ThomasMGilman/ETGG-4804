@@ -1,4 +1,5 @@
 #include "Image.h"
+#include "Stopwatch.h"
 #include <stdlib.h>
 #include <string>
 #include <cstdint>
@@ -16,7 +17,8 @@ int main(int argc, char* argv[])
     unsigned num = img.width()*img.height()*img.bytesPerPixel();
     
     uint8_t* p = img.pixels();
-    
+	Stopwatch swatch;
+	swatch.start();
     for(unsigned i=0;i<num;i+=img.bytesPerPixel()){
         //make sure we don't change alpha channel, if there is one...
         for(int j=0;j<3;++j){
@@ -30,6 +32,8 @@ int main(int argc, char* argv[])
             p[i+j] = uint8_t(tmp);
         }
     }
+	swatch.stop();
+	cout << swatch.elapsed_us() << "usec\n";
     img.writePng("out.png");
     return 0;
 }

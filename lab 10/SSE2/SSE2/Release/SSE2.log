@@ -1,0 +1,8 @@
+﻿  main.cpp
+D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 10\SSE2\SSE2\Image.h(45,29): warning C4244: 'argument': conversion from 'std::streamoff' to 'const unsigned int', possible loss of data
+  Generating code
+  24 of 373 functions ( 6.4%) were compiled, the rest were copied from previous compilation.
+    21 functions were new in current compilation
+    16 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  SSE2.vcxproj -> D:\SchoolAndProjects\Programs\ETGG 4804_01 Optimization Techniques\lab 10\SSE2\Release\SSE2.exe
