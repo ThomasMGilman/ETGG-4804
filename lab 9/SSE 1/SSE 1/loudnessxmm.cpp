@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
 	__m128 factorX = _mm_load1_ps(&echo_decay);		//Load single 32bit float from mem into all elements of factorX
 
 	alignas(16) float echo_delay = atof(argv[3]);	//in seconds
+	echo_delay *= .001;								//Convert to milisceonds
     Wave w(filename);
     if( w.format.format != Wave::FormatCode::FLOAT ){
         cout << "Not a float wave\n";
@@ -40,7 +41,7 @@ int main(int argc, char* argv[])
     swatch.stop();
     cout << swatch.elapsed_us() << "usec\n";
 
-    w.write("outx.wav");
+    w.write("out.wav");
     
     return 0;
 }

@@ -1,0 +1,6 @@
+﻿  loudnessxmm.cpp
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(12,34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(17,31): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(18,20): warning C4305: '*=': truncation from 'double' to 'float'
+D:\School\Programs\ETGG 4804 Optimization Techniques\lab 9\SSE 1\SSE 1\loudnessxmm.cpp(30,23): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+  SSE 1.vcxproj -> D:\School\Programs\ETGG 4804 Optimization Techniques\lab 9\SSE 1\x64\Debug\SSE 1.exe

@@ -1,9 +1,9 @@
 wavGiven:	frankenstein_snippet.wav
 decayGiven: .25
-delayGiven: 0.005
+delayGiven: 5
 timeTaken:	3466 usec
 
 wavGiven:	frankenstein_01_shelley_64kb.wav
 decayGiven: .25
-delayGiven: 0.005
+delayGiven: 5
 timeTaken:	35389 usec

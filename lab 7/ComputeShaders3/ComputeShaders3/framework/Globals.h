@@ -52,7 +52,7 @@ class Globals {
     Sampler linearsampler{false};
     Text text1{ vec2(10,35), ""};
     Text text2{ vec2(10,10), ""};
-    Scene scene{"scene5.txt"};
+    Scene scene{"scene6.txt"};
     std::set<int> keyset;
 	
 	bool allowReflections = true;
